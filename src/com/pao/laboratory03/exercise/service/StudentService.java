@@ -73,7 +73,7 @@ public class StudentService {
         lista.sort(Comparator.comparingDouble(Student::getAverage).reversed());
         int i = 1;
         for(Student s : lista){
-            System.out.println("Locul " + i + " studentul/a" + s.getName() + " cu media " + s.getAverage());
+            System.out.println("Locul " + i + " studentul/a " + s.getName() + " cu media " + s.getAverage());
             i++;
         }
     }
