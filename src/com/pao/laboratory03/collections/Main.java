@@ -1,5 +1,8 @@
 package com.pao.laboratory03.collections;
 
+import java.util.*;
+
+
 /**
  * Exercițiul 1 — Colecții: HashMap și TreeMap
  *
@@ -50,7 +53,49 @@ package com.pao.laboratory03.collections;
  */
 public class Main {
     public static void main(String[] args) {
-        // TODO: implementează cele 3 părți de mai sus
+        String[] words = {"java", "python", "java", "c++", "python", "java", "rust", "c++", "go"};
+        Map<String, Integer> frecventa = new HashMap<>();
+        for(String s : words){
+            frecventa.put(s, frecventa.getOrDefault(s, 0) + 1);
+        }
+        System.out.println("PARTEA A");
+        System.out.println("Frecventa" + frecventa);
+
+        boolean eRust = false;
+        if(frecventa.containsKey("rust")) {eRust = true;};
+        System.out.println("Contine rust? " + eRust);
+        System.out.println("Chei " + frecventa.keySet());
+        System.out.println("Valori " + frecventa.values());
+
+        for (Map.Entry<String, Integer> intrare : frecventa.entrySet()) {
+            System.out.println(intrare.getKey() + " -> " + intrare.getValue());
+        }
+
+        TreeMap<String, Integer> sortedFrecv = new TreeMap<>(frecventa);
+        System.out.println("PARTEA B");
+        System.out.println("Sortat: " + sortedFrecv);
+        System.out.println("Prima cheie: " + sortedFrecv.firstKey());
+        System.out.println("Ultima cheie: " + sortedFrecv.lastKey());
+
+        System.out.println("Partea C");
+
+        Map<String, List<String>> studenti= new HashMap<>();
+        studenti.put("PAOJ", new ArrayList<>(Arrays.asList("Ana", "Mihai", "Ion")));
+        studenti.put("BD", new ArrayList<>(Arrays.asList("Ana", "Elena")));
+        List<String> paoj = new ArrayList<>();
+        paoj.add("Ana");
+        paoj.add("Mihai");
+        paoj.add("Ion");
+        studenti.put("PAOJ", paoj);
+
+        List<String> bd = new ArrayList<>();
+        bd.add("Ana");
+        bd.add("Elena");
+        studenti.put("BD", bd);
+        System.out.println("Studenti la PAOJ " + studenti.get("PAOJ"));
+        studenti.get("BD").add("Geroge");
+        System.out.println("Studenti la BD(actualizat) " + studenti.get("BD"));
+
     }
 }
 
