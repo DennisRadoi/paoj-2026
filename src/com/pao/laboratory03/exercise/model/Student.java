@@ -46,7 +46,7 @@ public class Student {
         for(double g : this.grades.values()){
             suma += g;
         }
-        double avg = suma /= grades.size();
+        double avg = suma / grades.size();
         return avg;
     }
 
