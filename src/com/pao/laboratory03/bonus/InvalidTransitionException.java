@@ -1,5 +1,7 @@
 package com.pao.laboratory03.bonus;
 
+import com.pao.laboratory03.bonus.enums.Status;
+
 public class InvalidTransitionException extends RuntimeException {
     private final Status from, to;
     public InvalidTransitionException(Status from, Status to) {

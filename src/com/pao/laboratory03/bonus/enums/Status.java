@@ -1,5 +1,5 @@
-package com.pao.laboratory03.bonus;
-package com.pao.laboratory03.bonus.Priority;
+package com.pao.laboratory03.bonus.enums;
+
 public enum Status {
     TODO{
         public boolean canTransitionTo(Status next) {
@@ -19,5 +19,4 @@ public enum Status {
     };
 
     public abstract boolean canTransitionTo(Status next);
-
 }

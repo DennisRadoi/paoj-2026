@@ -1,4 +1,4 @@
-package com.pao.laboratory03.bonus;
+package com.pao.laboratory03.bonus.enums;
 
 public enum Priority {
     LOW(1, 1.0),
@@ -14,6 +14,6 @@ public enum Priority {
     }
 
     public double calculateScore(int baseDays) {
-        return (double) baseDays * multiplier;
+        return baseDays * multiplier;
     }
 }

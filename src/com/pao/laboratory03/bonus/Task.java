@@ -1,5 +1,6 @@
 package com.pao.laboratory03.bonus;
 
+import com.pao.laboratory03.bonus.enums.Status;
 import com.pao.laboratory03.enums.Priority;
 
 public class Task {
@@ -14,6 +15,7 @@ public class Task {
         this.title = title;
         this.status = Status.TODO;
         this.priority = priority;
+        this.assignee = null;
     }
 
     public String getId() {

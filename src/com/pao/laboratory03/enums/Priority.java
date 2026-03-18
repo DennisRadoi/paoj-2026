@@ -41,4 +41,5 @@ public enum Priority {
     }
 
     public abstract String getEmoji();
+
 }
