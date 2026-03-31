@@ -1,11 +1,14 @@
 package com.pao.project.models;
 
+import java.util.ArrayList;
+
 public class Client extends Utilizator {
     private Adresa adresa;
-
+    private ArrayList<CardBancar> listaCarduri;
     public Client(int id, String data_nasterii, String telefon, String email, int varsta, String nume, Adresa adresa) {
         super(id, data_nasterii, telefon, email, varsta, nume);
         this.adresa = adresa;
+        this.listaCarduri = new ArrayList<>();
     }
 
     public Adresa getAdresa() {
