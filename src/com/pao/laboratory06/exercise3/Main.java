@@ -12,7 +12,14 @@ public class Main {
         for(Inginer i : ingineri){
             System.out.println(i);
         }
-        System.out.println("Dupa: ");
+
+        System.out.println("Dupa nume: ");
+        Arrays.sort(ingineri);
+        for(Inginer i : ingineri){
+            System.out.println(i);
+        }
+
+        System.out.println("Dupa salariu: ");
         Arrays.sort(ingineri, new ComparatorInginerSalariu());
         for(Inginer i : ingineri){
             System.out.println(i);

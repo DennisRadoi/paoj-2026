@@ -7,4 +7,8 @@ public class Angajat extends Persoana{
         this.salariu = salariu;
     }
 
+    public double getSalariu(){
+        return this.salariu;
+    }
+
 }
