@@ -53,5 +53,15 @@ public class Restaurant {
     public String toString() {
         return "Restaurantul: " + nume + " din " + adresa + " (are " + meniu.size() + " produse in meniu)";
     }
+
+    public boolean equals(Object o){
+        if(o == null || o.getClass() != getClass()) return false;
+        Restaurant r = (Restaurant) o;
+        return getNume() == r.getNume();
+    }
+
+    public int hashCode() {
+        return java.util.Objects.hash(nume);
+    }
 }
 
