@@ -53,7 +53,7 @@ public class IOTest {
      * @param printFullOutput dacă să se afișeze outputul complet (expected/actual) la testele eșuate
      */
     public static void runParts(String testsDir, MainMethod main, boolean printFullOutput) {
-        File dir = new File(testsDir);
+        File dir = resolveTestsDir(testsDir);
         if (!dir.exists() || !dir.isDirectory()) {
             System.out.println("EROARE: directorul de teste nu există: " + dir.getAbsolutePath());
             return;
@@ -63,8 +63,8 @@ public class IOTest {
         File[] all = dir.listFiles();
         File[] partDirs = (all == null) ? new File[0]
                 : Arrays.stream(all)
-                  .filter(f -> f.isDirectory())
-                  .toArray(File[]::new);
+                .filter(f -> f.isDirectory())
+                .toArray(File[]::new);
         Arrays.sort(partDirs, Comparator.comparing(File::getName));
 
         if (partDirs.length == 0) {
@@ -130,7 +130,7 @@ public class IOTest {
      * @param printFullOutput dacă să se afișeze outputul complet (expected/actual) la testele eșuate
      */
     public static void runPart(String testsDir, String partName, MainMethod main, boolean printFullOutput) {
-        File partDir = new File(testsDir, partName);
+        File partDir = new File(resolveTestsDir(testsDir), partName);
         if (!partDir.exists() || !partDir.isDirectory()) {
             System.out.println("EROARE: directorul de parte nu există: " + partDir.getAbsolutePath());
             return;
@@ -171,7 +171,7 @@ public class IOTest {
      * @param printFullOutput dacă să se afișeze outputul complet la testele eșuate
      */
     public static void runFlat(String testsDir, MainMethod main, boolean printFullOutput) {
-        File dir = new File(testsDir);
+        File dir = resolveTestsDir(testsDir);
         if (!dir.exists() || !dir.isDirectory()) {
             System.out.println("EROARE: directorul de teste nu există: " + dir.getAbsolutePath());
             return;
@@ -291,6 +291,20 @@ public class IOTest {
     // Overload for backward compatibility
     private static int[] runPartDir(File dir, MainMethod main) {
         return runPartDir(dir, main, false);
+    }
+
+    private static File resolveTestsDir(String testsDir) {
+        File dir = new File(testsDir);
+        if (dir.exists()) {
+            return dir;
+        }
+
+        File nestedProjectDir = Paths.get("paoj-2026", testsDir).toFile();
+        if (nestedProjectDir.exists()) {
+            return nestedProjectDir;
+        }
+
+        return dir;
     }
 
     private static String capture(String input, MainMethod main) {
