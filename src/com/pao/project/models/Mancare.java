@@ -60,4 +60,13 @@ public class Mancare extends Produs {
         return "MANCARE";
     }
 
+    public String toString() {
+        return "Mancare{" +
+                "gramaj=" + gramaj +
+                ", esteVegan=" + esteVegan +
+                ", estePicant=" + estePicant +
+                ", nivelPicant=" + nivelPicant +
+                ", calorii=" + calorii +
+                '}';
+    }
 }

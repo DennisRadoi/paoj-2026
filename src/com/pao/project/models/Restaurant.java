@@ -1,6 +1,7 @@
 package com.pao.project.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Restaurant {
@@ -8,13 +9,15 @@ public class Restaurant {
     private Adresa adresa;
     private double rating;
     final private int id;
-    private List<Produs> meniu;
+    private ArrayList<Produs> meniu;
+    private HashMap<Utilizator, Integer> note;
     public Restaurant(String nume, Adresa adresa, double rating, int id){
         this.nume = nume;
         this.adresa = adresa;
         this.rating = rating;
         this.id = id;
         this.meniu = new ArrayList<>();
+        this.note = new HashMap<>();
     }
 
     public List<Produs> getMeniu() {
@@ -48,6 +51,25 @@ public class Restaurant {
     public void adaugaProdusMeniu(Produs p){
         this.meniu.add(p);
     }
+
+    public void adaugaNota(Utilizator u, int nota){
+        note.put(u, nota);
+    }
+
+    public boolean areCinci(){
+        int suma = 0;
+        for(int nota : note.values()){
+            suma += nota;
+        }
+        return suma / note.size() >= 5;
+    }
+
+    public long getNumarDeserturi() {
+        return meniu.stream()
+                .filter(p -> p instanceof Desert)
+                .count();
+    }
+
 
     @Override
     public String toString() {

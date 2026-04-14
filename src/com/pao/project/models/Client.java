@@ -31,6 +31,14 @@ public class Client extends Utilizator {
         System.out.println(c);
     }
 
+    public ArrayList<CardBancar> getListaCarduri() {
+        return listaCarduri;
+    }
+
+    public void adaugaCard(CardBancar card) {
+        listaCarduri.add(card);
+    }
+
     public String getTipUtilizator() {
         return "CLIENT";
     }

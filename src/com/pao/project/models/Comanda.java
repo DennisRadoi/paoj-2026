@@ -9,9 +9,9 @@ public class Comanda {
     private Livrator livrator;
     private ArrayList<Produs> produse;
     private double pretTotal;
-    private String status;
+    private StatusComanda status;
 
-    public Comanda(int id, Client client, Restaurant restaurant, Livrator livrator, ArrayList<Produs> produse, String status) {
+    public Comanda(int id, Client client, Restaurant restaurant, Livrator livrator, ArrayList<Produs> produse, StatusComanda status) {
         this.id = id;
         this.client = client;
         this.restaurant = restaurant;
@@ -22,6 +22,10 @@ public class Comanda {
         for (int i = 0; i < produse.size(); i++){
             this.pretTotal += produse.get(i).getPret();
         }
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Client getClient() {
@@ -64,17 +68,25 @@ public class Comanda {
         this.pretTotal = pretTotal;
     }
 
-    public String getStatus() {
+    public StatusComanda getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusComanda status) {
         this.status = status;
     }
 
     public void adaugaProdus(Produs p){
         this.produse.add(p);
         this.pretTotal += p.getPret();
+    }
+
+    public double calcTotalComanda(){
+        double total = 0;
+        for(Produs p : produse){
+            total += p.getPret();
+        }
+        return total;
     }
 
     public String toString() {
