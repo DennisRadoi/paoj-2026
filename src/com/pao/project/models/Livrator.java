@@ -35,4 +35,8 @@ public class Livrator extends Utilizator {
     public void setNrComenzi(int nrComenzi) {
         this.nrComenzi = nrComenzi;
     }
+
+    public String getTipUtilizator() {
+        return "LIVRATOR";
+    }
 }

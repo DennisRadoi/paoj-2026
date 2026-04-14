@@ -1,10 +1,12 @@
 package com.pao.project;
 
-import com.pao.project.models.Livrator;
+//import com.pao.project.models.*;
 
 public class Main {
-    static int x = 5;
     public static void main(String[] args){
-        System.out.println(x);
+        A a = new A();
+        System.out.println(a.adunare());
+        System.out.println(a.inmultire(5.5));
+        a.afisareaMea();
     }
 }

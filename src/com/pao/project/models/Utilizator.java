@@ -59,4 +59,7 @@ public abstract class Utilizator {
     public void setTelefon(String telefon) {
         this.telefon = telefon;
     }
+
+    public abstract String getTipUtilizator();
+
 }

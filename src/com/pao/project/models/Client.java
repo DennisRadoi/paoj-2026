@@ -31,5 +31,8 @@ public class Client extends Utilizator {
         System.out.println(c);
     }
 
+    public String getTipUtilizator() {
+        return "CLIENT";
+    }
 }
 

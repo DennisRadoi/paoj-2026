@@ -2,27 +2,25 @@ package com.pao.project.models;
 
 import java.util.Objects;
 
-public class Produs implements Comparable<Produs>{
-    private CodProdus cod;
-    private String nume;
-    private String tip;
-    private String descriere;
-    private double pret;
+public abstract class Produs implements Comparable<Produs>{
+    protected CodProdus cod;
+    protected String nume;
+    protected String descriere;
+    protected double pret;
 
-    public Produs(CodProdus cod, String nume, String tip, String descriere, double pret) {
+    public Produs(CodProdus cod, String nume, String descriere, double pret) {
         this.cod = cod;
         this.nume = nume;
-        this.tip = tip;
         this.descriere = descriere;
         this.pret = pret;
     }
 
-    public int getId() {
-        return id;
+    public CodProdus getId() {
+        return cod;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(CodProdus cod) {
+        this.cod = cod;
     }
 
     public String getNume() {
@@ -31,14 +29,6 @@ public class Produs implements Comparable<Produs>{
 
     public void setNume(String nume) {
         this.nume = nume;
-    }
-
-    public String getTip() {
-        return tip;
-    }
-
-    public void setTip(String tip) {
-        this.tip = tip;
     }
 
     public String getDescriere() {
@@ -62,6 +52,7 @@ public class Produs implements Comparable<Produs>{
         Produs produs = (Produs) o;
         return getId() == produs.getId();
     }
+    public abstract String getTip();
 
     public int hashCode() {
         return Objects.hashCode(getId());
@@ -69,9 +60,5 @@ public class Produs implements Comparable<Produs>{
 
     public int compareTo(Produs altProdus) {
         return Double.compare(this.pret, altProdus.getPret());
-    }
-
-    public String toString() {
-        return "Produs #" + id + " | " + nume + " (" + tip + ") - " + pret + " RON";
     }
 }
