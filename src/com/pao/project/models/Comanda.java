@@ -86,6 +86,7 @@ public class Comanda {
         for(Produs p : produse){
             total += p.getPret();
         }
+        this.pretTotal = total;
         return total;
     }
 

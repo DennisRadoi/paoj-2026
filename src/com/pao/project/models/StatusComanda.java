@@ -2,7 +2,7 @@ package com.pao.project.models;
 
 public enum StatusComanda {
     INITIALIZATA, IN_PREPARARE, IN_LIVRARE, LIVRATA, RETURNATA,
-    ANULATA
+    ANULATA;
 
     public StatusComanda getUrm(StatusComanda s){
         return 0;

@@ -2,9 +2,7 @@ package com.pao.project.services;
 
 import com.pao.project.models.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ComandaService {
     private static ComandaService instanta = null;
@@ -95,6 +93,18 @@ public class ComandaService {
             }
         }
         return pmax;
+    }
+
+    public void afisComenziLivratorFinalizate(Livrator l){
+        TreeSet<Comanda> rez = new TreeSet<>(new ComparatorComanda());
+        for(Comanda c : comenzi){
+            if(c.getLivrator().getId() == l.getId() && c.getStatus() == StatusComanda.LIVRATA){
+                rez.add(c);
+            }
+        }
+        for(Comanda c : comenzi){
+            System.out.println(c);
+        }
     }
 
 }
