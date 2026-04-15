@@ -7,17 +7,23 @@ import java.util.List;
 public class Restaurant {
     private String nume;
     private Adresa adresa;
-    private double rating;
+    private double rating = 0;
     final private int id;
     private ArrayList<Produs> meniu;
     private HashMap<Utilizator, Integer> note;
-    public Restaurant(String nume, Adresa adresa, double rating, int id){
+    public Restaurant(String nume, Adresa adresa, int id, HashMap<Utilizator, Integer> note){
         this.nume = nume;
         this.adresa = adresa;
-        this.rating = rating;
         this.id = id;
         this.meniu = new ArrayList<>();
-        this.note = new HashMap<>();
+        this.note = note;
+        if(!note.isEmpty()){
+            int suma = 0;
+            for(int nota : note.values()) {
+                suma += nota;
+            }
+            this.rating = (double) suma / note.size();
+        }
     }
 
     public List<Produs> getMeniu() {
@@ -54,14 +60,20 @@ public class Restaurant {
 
     public void adaugaNota(Utilizator u, int nota){
         note.put(u, nota);
+        int suma = 0;
+        for(int n : note.values()){
+            suma += n;
+        }
+        this.rating = (double) suma / note.size();
     }
 
-    public boolean areCinci(){
+    public boolean areMediaCinci(){
+        if(note.isEmpty()) return false;
         int suma = 0;
         for(int nota : note.values()){
             suma += nota;
         }
-        return suma / note.size() >= 5;
+        return (double) suma / note.size() >= 5;
     }
 
     public long getNumarDeserturi() {
@@ -79,7 +91,7 @@ public class Restaurant {
     public boolean equals(Object o){
         if(o == null || o.getClass() != getClass()) return false;
         Restaurant r = (Restaurant) o;
-        return getNume() == r.getNume();
+        return getNume().equalsIgnoreCase(r.getNume());
     }
 
     public int hashCode() {

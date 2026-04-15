@@ -50,7 +50,7 @@ public abstract class Produs implements Comparable<Produs>{
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Produs produs = (Produs) o;
-        return getId() == produs.getId();
+        return cod.equals(produs.cod);
     }
     public abstract String getTip();
 

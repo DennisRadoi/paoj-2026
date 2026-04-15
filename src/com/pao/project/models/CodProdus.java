@@ -1,5 +1,7 @@
 package com.pao.project.models;
 
+import java.util.Objects;
+
 public final class CodProdus {
     private final String cod;
     public CodProdus(String _cod){
@@ -15,7 +17,15 @@ public final class CodProdus {
     public String getCodAsignat() {
         return this.cod;
     }
-
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CodProdus codProdus = (CodProdus) o;
+        return cod.equals(codProdus.cod);
+    }
+    public int hashCode() {
+        return Objects.hash(cod);
+    }
     public String toString() {
         return this.cod;
     }

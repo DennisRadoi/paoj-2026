@@ -78,7 +78,7 @@ public class ComandaService {
         for(Comanda c : comenzi){
             for(Produs pCandidat : c.getProduse()){
                 if(!dict.containsKey(pCandidat)){
-                    dict.put(pCandidat, 0);
+                    dict.put(pCandidat, 1);
                 }
                 else{
                     dict.put(pCandidat, dict.get(pCandidat) + 1);
@@ -98,11 +98,11 @@ public class ComandaService {
     public void afisComenziLivratorFinalizate(Livrator l){
         TreeSet<Comanda> rez = new TreeSet<>(new ComparatorComanda());
         for(Comanda c : comenzi){
-            if(c.getLivrator().getId() == l.getId() && c.getStatus() == StatusComanda.LIVRATA){
+            if(c.getLivrator() != null && c.getLivrator().getId() == l.getId() && c.getStatus() == StatusComanda.LIVRATA){
                 rez.add(c);
             }
         }
-        for(Comanda c : comenzi){
+        for(Comanda c : rez){
             System.out.println(c);
         }
     }

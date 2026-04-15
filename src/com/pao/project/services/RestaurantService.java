@@ -53,7 +53,7 @@ public class RestaurantService {
                 .filter(p -> p instanceof Mancare)
                 .map(p -> (Mancare) p)
                 .sorted(Comparator.comparing(Mancare::getCalorii)
-                        .thenComparing(Mancare::getNivelPicant))
+                        .thenComparing(Mancare::getNivelPicant).reversed())
                 .toList();
         for(Mancare m : sortate){
             System.out.println(m);
@@ -62,9 +62,10 @@ public class RestaurantService {
 
     public void afisTopRestauranteDupaRating(){
         List<Restaurant> sortate = restaurante.stream()
-                .filter(Restaurant::areCinci)
-                .sorted(Comparator.comparing(Restaurant::getRating).reversed()
-                        .thenComparing(Restaurant::getNumarDeserturi))
+                .filter(Restaurant::areMediaCinci)
+                .sorted(Comparator.comparing(Restaurant::getRating)
+                        .reversed()
+                        .thenComparing(Comparator.comparing(Restaurant::getNumarDeserturi).reversed()))
                 .toList();
         for(Restaurant r : sortate) {
             System.out.println(r);

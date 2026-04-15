@@ -24,12 +24,6 @@ public class Client extends Utilizator {
         return "Clientul " + id + " pe nume " + nume + " cu adresa de livrare: " + adresa;
     }
 
-    public static void main(){
-        Adresa a = new Adresa("sector2", "bucuresti", "pantelimon", 334, "130", 2, 30);
-        Client c =  new Client(1, "26/03/2005",
-                "0723423860", "da@gmail.com", 20, "dennis", a);
-        System.out.println(c);
-    }
 
     public ArrayList<CardBancar> getListaCarduri() {
         return listaCarduri;
