@@ -19,9 +19,10 @@ public class Main {
         Scanner s = new Scanner(System.in);
         ArrayList<Student> studenti = new ArrayList<>();
         try(BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))){
-            while(br.readLine() != null) {
-                String[] parti = br.readLine().split(",");
-                if(parti.length == 4) {
+            String linie;
+            while ((linie = br.readLine()) != null){
+                String[] parti = linie.split(",");
+                if (parti.length == 4) {
                     String nume = parti[0].trim();
                     int varsta = Integer.parseInt(parti[1].trim());
                     String oras = parti[2].trim();
