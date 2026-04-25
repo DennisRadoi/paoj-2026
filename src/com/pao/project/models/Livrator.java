@@ -1,5 +1,7 @@
 package com.pao.project.models;
 
+import java.util.Scanner;
+
 public class Livrator extends Utilizator {
     private String vehicul;
     private int nrComenzi;
@@ -38,5 +40,21 @@ public class Livrator extends Utilizator {
 
     public String getTipUtilizator() {
         return "LIVRATOR";
+    }
+
+    @Override
+    public String toString() {
+        return "Livratorul " + id + " pe nume " + nume + " conduce un vehicul de tip " + vehicul + ", a efecutat " + nrComenzi +
+                " comenzi ";
+    }
+
+    public void citeste(Scanner in) {
+        super.citeste(in);
+        System.out.print("Vehicul: ");
+        this.vehicul = in.nextLine();
+        System.out.print("Disponibil (true/false): ");
+        this.esteDisponibil = Boolean.parseBoolean(in.nextLine());
+        System.out.print("Numar comenzi: ");
+        this.nrComenzi = Integer.parseInt(in.nextLine());
     }
 }

@@ -71,4 +71,10 @@ public class RestaurantService {
             System.out.println(r);
         }
     }
+
+    public void afisProduseDinMeniu(Restaurant r){
+        for(Produs p : r.getMeniu()){
+            System.out.println(p);
+        }
+    }
 }

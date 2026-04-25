@@ -1,6 +1,10 @@
 package com.pao.project.models;
 
-public abstract class Utilizator {
+import com.pao.project.services.IOperatiiCitireService;
+
+import java.util.Scanner;
+
+public abstract class Utilizator implements IOperatiiCitireService {
     final protected int id;
     protected int varsta;
     protected String email;
@@ -61,5 +65,18 @@ public abstract class Utilizator {
     }
 
     public abstract String getTipUtilizator();
+
+    public void citeste(Scanner in) {
+        System.out.print("Nume: ");
+        this.nume = in.nextLine();
+        System.out.print("Data nasterii: ");
+        this.data_nasterii = in.nextLine();
+        System.out.print("Telefon: ");
+        this.telefon = in.nextLine();
+        System.out.print("Email: ");
+        this.email = in.nextLine();
+        System.out.print("Varsta: ");
+        this.varsta = Integer.parseInt(in.nextLine());
+    }
 
 }

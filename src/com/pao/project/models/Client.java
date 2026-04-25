@@ -1,6 +1,7 @@
 package com.pao.project.models;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Client extends Utilizator {
     private Adresa adresa;
@@ -24,7 +25,6 @@ public class Client extends Utilizator {
         return "Clientul " + id + " pe nume " + nume + " cu adresa de livrare: " + adresa;
     }
 
-
     public ArrayList<CardBancar> getListaCarduri() {
         return listaCarduri;
     }
@@ -35,6 +35,14 @@ public class Client extends Utilizator {
 
     public String getTipUtilizator() {
         return "CLIENT";
+    }
+
+    public void citeste(Scanner in) {
+        super.citeste(in);
+        if (this.adresa == null) {
+            this.adresa = new Adresa();
+        }
+        this.adresa.citeste(in);
     }
 }
 

@@ -1,10 +1,13 @@
 package com.pao.project.models;
 
+import com.pao.project.services.IOperatiiCitireService;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
-public class Restaurant {
+public class Restaurant implements IOperatiiCitireService {
     private String nume;
     private Adresa adresa;
     private double rating = 0;
@@ -96,6 +99,13 @@ public class Restaurant {
 
     public int hashCode() {
         return java.util.Objects.hash(nume);
+    }
+
+    public void citeste(Scanner in) {
+        System.out.print("Nume restaurant: ");
+        this.nume = in.nextLine();
+        System.out.print("Rating restaurant: ");
+        this.rating = Double.parseDouble(in.nextLine());
     }
 }
 

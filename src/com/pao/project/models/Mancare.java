@@ -1,5 +1,7 @@
 package com.pao.project.models;
 
+import java.util.Scanner;
+
 public class Mancare extends Produs {
     private int gramaj;
     private boolean esteVegan;
@@ -68,5 +70,19 @@ public class Mancare extends Produs {
                 ", nivelPicant=" + nivelPicant +
                 ", calorii=" + calorii +
                 '}';
+    }
+
+    public void citeste(Scanner in) {
+        super.citeste(in);
+        System.out.print("Gramaj: ");
+        this.gramaj = Integer.parseInt(in.nextLine());
+        System.out.print("Este vegan (true/false): ");
+        this.esteVegan = Boolean.parseBoolean(in.nextLine());
+        System.out.print("Este picant (true/false): ");
+        this.estePicant = Boolean.parseBoolean(in.nextLine());
+        System.out.print("Nivel picant: ");
+        this.nivelPicant = Integer.parseInt(in.nextLine());
+        System.out.print("Calorii: ");
+        this.calorii = Integer.parseInt(in.nextLine());
     }
 }

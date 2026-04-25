@@ -1,5 +1,7 @@
 package com.pao.project.models;
 
+import java.util.Scanner;
+
 public class Bautura extends Produs{
     private int volumMl;
     private boolean esteCarbogazoasa;
@@ -58,6 +60,24 @@ public class Bautura extends Produs{
 
     public String getTip() {
         return "BAUTURA";
+    }
+
+    public String toString(){
+        return "Bautura " + nume + " are " + volumMl + " ml ";
+    }
+
+    public void citeste(Scanner in) {
+        super.citeste(in);
+        System.out.print("Volum ml: ");
+        this.volumMl = Integer.parseInt(in.nextLine());
+        System.out.print("Este carbogazoasa (true/false): ");
+        this.esteCarbogazoasa = Boolean.parseBoolean(in.nextLine());
+        System.out.print("Contine alcool (true/false): ");
+        this.contineAlcool = Boolean.parseBoolean(in.nextLine());
+        System.out.print("Procent alcool: ");
+        this.procentAlcool = Double.parseDouble(in.nextLine());
+        System.out.print("Este rece (true/false): ");
+        this.rece = Boolean.parseBoolean(in.nextLine());
     }
 
 }

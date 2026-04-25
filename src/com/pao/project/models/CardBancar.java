@@ -1,6 +1,10 @@
 package com.pao.project.models;
 
-public class CardBancar {
+import com.pao.project.services.IOperatiiCitireService;
+
+import java.util.Scanner;
+
+public class CardBancar implements IOperatiiCitireService {
     private final int id;
     private String numeTitular;
     private String cvv;
@@ -71,5 +75,18 @@ public class CardBancar {
         }
         return "CardBancar [Titular: " + numeTitular + " | Numar: " + ascuns +
                 " | Expira la: " + lunaExp + "/" + anExp+ "]";
+    }
+
+    public void citeste(Scanner in) {
+        System.out.print("Nume titular: ");
+        this.numeTitular = in.nextLine();
+        System.out.print("CVV: ");
+        this.cvv = in.nextLine();
+        System.out.print("Numar card: ");
+        this.numar = in.nextLine();
+        System.out.print("Luna expirare: ");
+        this.lunaExp = Integer.parseInt(in.nextLine());
+        System.out.print("An expirare: ");
+        this.anExp = Integer.parseInt(in.nextLine());
     }
 }

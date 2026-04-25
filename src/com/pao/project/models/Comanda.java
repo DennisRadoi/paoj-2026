@@ -1,8 +1,12 @@
 package com.pao.project.models;
 
-import java.util.ArrayList;
+import com.pao.project.exceptions.StareComandaInvalidaException;
+import com.pao.project.services.IOperatiiCitireService;
 
-public class Comanda {
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Comanda implements IOperatiiCitireService {
     final private int id;
     private Client client;
     private Restaurant restaurant;
@@ -73,6 +77,14 @@ public class Comanda {
     }
 
     public void setStatus(StatusComanda status) {
+        if (status == null) {
+            throw new StareComandaInvalidaException("Statusul comenzii nu poate fi null.");
+        }
+        if (this.status != null && this.status.eFinal() && this.status != status) {
+            throw new StareComandaInvalidaException(
+                    "Comanda este deja intr-o stare finala (" + this.status + ") si nu mai poate fi modificata."
+            );
+        }
         this.status = status;
     }
 
@@ -95,5 +107,16 @@ public class Comanda {
         return "Comanda #" + id + " | Status: " + status +
                 " | Client: " + client.getNume() + " | Restaurant: " + restaurant.getNume() +
                 " | Livrator: " + numeLivrator + " | Total: " + pretTotal + " RON (" + produse.size() + " produse)";
+    }
+
+    public void citeste(Scanner in) {
+        System.out.print("Pret total comanda: ");
+        this.pretTotal = Double.parseDouble(in.nextLine());
+        System.out.print("Status comanda (INITIALIZATA, IN_PREPARARE, IN_LIVRARE, LIVRATA, RETURNATA, ANULATA): ");
+        try {
+            this.status = StatusComanda.valueOf(in.nextLine().trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new StareComandaInvalidaException("Status comanda invalid.");
+        }
     }
 }

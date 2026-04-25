@@ -1,8 +1,11 @@
 package com.pao.project.models;
 
-import java.util.Objects;
+import com.pao.project.services.IOperatiiCitireService;
 
-public abstract class Produs implements Comparable<Produs>{
+import java.util.Objects;
+import java.util.Scanner;
+
+public abstract class Produs implements Comparable<Produs>, IOperatiiCitireService {
     protected CodProdus cod;
     protected String nume;
     protected String descriere;
@@ -60,5 +63,14 @@ public abstract class Produs implements Comparable<Produs>{
 
     public int compareTo(Produs altProdus) {
         return Double.compare(this.pret, altProdus.getPret());
+    }
+
+    public void citeste(Scanner in) {
+        System.out.print("Nume produs: ");
+        this.nume = in.nextLine();
+        System.out.print("Descriere produs: ");
+        this.descriere = in.nextLine();
+        System.out.print("Pret produs: ");
+        this.pret = Double.parseDouble(in.nextLine());
     }
 }

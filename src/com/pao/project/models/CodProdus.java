@@ -1,15 +1,19 @@
 package com.pao.project.models;
 
-import java.util.Objects;
+import com.pao.project.exceptions.CodProdusInvalidException;
+import com.pao.project.services.IOperatiiCitireService;
 
-public final class CodProdus {
+import java.util.Objects;
+import java.util.Scanner;
+
+public final class CodProdus implements IOperatiiCitireService {
     private final String cod;
     public CodProdus(String _cod){
         if (_cod == null || _cod.trim().isEmpty()) {
-            throw new IllegalArgumentException("Codul produsului nu poate fi gol!");
+            throw new CodProdusInvalidException("Codul produsului nu poate fi gol!");
         }
         if(_cod.length() < 5){
-            throw new IllegalArgumentException("Lungimea codului trebuie sa aiba minim 5 caractere!");
+            throw new CodProdusInvalidException("Lungimea codului trebuie sa aiba minim 5 caractere!");
         }
         this.cod = _cod.toUpperCase();
     }
@@ -28,5 +32,9 @@ public final class CodProdus {
     }
     public String toString() {
         return this.cod;
+    }
+
+    public void citeste(Scanner in) {
+        System.out.println("CodProdus este imutabil. Creeaza un nou obiect CodProdus cu datele citite.");
     }
 }

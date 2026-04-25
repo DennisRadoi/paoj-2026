@@ -3,6 +3,7 @@ package com.pao.project.services;
 import com.pao.project.models.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UtilizatorService {
     private static UtilizatorService instanta = null;
@@ -94,7 +95,7 @@ public class UtilizatorService {
         return livratori;
     }
 
-    public Client getClientCuMaxComenzi(ArrayList<Comanda> comenzi){
+    public HashMap<Client, Integer> getClientCuMaxComenzi(ArrayList<Comanda> comenzi){
         Client cmax = null;
         int maxComenzi = 0;
         for(Client client : this.getAllClienti()){
@@ -109,7 +110,11 @@ public class UtilizatorService {
                 cmax = client;
             }
         }
-        return cmax;
+        HashMap<Client, Integer> rezultat = new HashMap<>();
+        if (cmax != null) {
+            rezultat.put(cmax, maxComenzi);
+        }
+        return rezultat;
     }
 
 }
