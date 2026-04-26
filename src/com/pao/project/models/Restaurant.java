@@ -85,8 +85,6 @@ public class Restaurant implements IOperatiiCitireService {
                 .count();
     }
 
-
-    @Override
     public String toString() {
         return "Restaurantul: " + nume + " din " + adresa + " (are " + meniu.size() + " produse in meniu)";
     }

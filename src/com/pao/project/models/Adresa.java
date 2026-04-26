@@ -18,13 +18,13 @@ public class Adresa implements IOperatiiCitireService {
     }
 
     public Adresa(String judet, String localitate, String strada, int numar, String bloc, int scara, int apartament) {
-        if (judet == null || judet.isBlank()) {
+        if(judet == null || judet.isBlank()){
             throw new IllegalArgumentException("judet nu poate fi null sau gol");
         }
-        if (localitate == null || localitate.isBlank()) {
+        if(localitate == null || localitate.isBlank()){
             throw new IllegalArgumentException("localitate nu poate fi null sau gol");
         }
-        if (strada == null || strada.isBlank()) {
+        if(strada == null || strada.isBlank()){
             throw new IllegalArgumentException("strada nu poate fi null sau gol");
         }
 
@@ -32,22 +32,22 @@ public class Adresa implements IOperatiiCitireService {
         this.localitate = localitate.trim();
         this.strada = strada.trim();
 
-        if (numar <= 0) {
+        if(numar <= 0){
             throw new IllegalArgumentException("numar trebuie sa fie > 0");
         }
         this.numar = numar;
 
-        if (bloc == null || bloc.isBlank()) {
+        if (bloc == null || bloc.isBlank()){
             this.bloc = null;
             this.scara = 0;
             this.apartament = 0;
-        } else {
+        } else{
             this.bloc = bloc.trim();
 
-            if (scara <= 0) {
+            if (scara <= 0){
                 throw new IllegalArgumentException("scara trebuie sa fie > 0 cand bloc este prezent");
             }
-            if (apartament <= 0) {
+            if (apartament <= 0){
                 throw new IllegalArgumentException("apartament trebuie sa fie > 0 cand bloc este prezent");
             }
 
