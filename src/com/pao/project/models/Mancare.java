@@ -63,13 +63,7 @@ public class Mancare extends Produs {
     }
 
     public String toString() {
-        return "Mancare{" +
-                "gramaj=" + gramaj +
-                ", esteVegan=" + esteVegan +
-                ", estePicant=" + estePicant +
-                ", nivelPicant=" + nivelPicant +
-                ", calorii=" + calorii +
-                '}';
+        return nume + " are " + gramaj + " grame si " + calorii + " calorii";
     }
 
     public void citeste(Scanner in) {

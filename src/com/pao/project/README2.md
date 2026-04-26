@@ -4,7 +4,7 @@
 2. Inregistreaza un utilizator nou
 3. Afiseaza clientul cu cele mai multe comenzi
 4. Returneaza o comanda
-5. Afiseaza si sorteaza produsele de tip mancare ale unui restaurant
+5. Afiseaza si sorteaza produsele de tip mancare ale unui restaurant dupa numarul de calorii
 6. Afiseaza comenzile aflate in livrare
 7. Afiseaza cel mai comandat produs din toate restaurantele
 8. Afiseaza topul restaurantelor (media notelor >= 5)
