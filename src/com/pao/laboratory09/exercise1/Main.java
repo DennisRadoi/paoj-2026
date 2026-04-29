@@ -4,26 +4,72 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    private static final String OUTPUT_FILE = "output/lab09_ex1.ser";
+    private static final String OUTPUT_FILE = "paoj-2026/output/lab09_ex1.ser";
 
     public static void main(String[] args) throws Exception {
-        // TODO: Implementează conform Readme.md
-        //
-        // 1. Citește N din stdin, apoi cele N tranzacții (id suma data contSursa contDestinatie tip)
-        // 2. Setează câmpul note = "procesat" pe fiecare tranzacție înainte de serializare
-        // 3. Serializează lista de tranzacții în OUTPUT_FILE cu ObjectOutputStream (try-with-resources)
-        // 4. Deserializează lista din OUTPUT_FILE cu ObjectInputStream (try-with-resources)
-        // 5. Procesează comenzile din stdin până la EOF:
-        //    - LIST          → afișează toate tranzacțiile, câte una pe linie
-        //    - FILTER yyyy-MM → afișează tranzacțiile cu data care începe cu yyyy-MM
-        //                       sau "Niciun rezultat." dacă nu există
-        //    - NOTE id        → afișează "NOTE[id]: <valoarea câmpului note>"
-        //                       sau "NOTE[id]: not found" dacă id-ul nu există
-        //
-        // Format linie tranzacție:
-        //   [id] data tip: suma RON | contSursa -> contDestinatie
-        //   Ex: [1] 2024-01-15 CREDIT: 1500.00 RON | RO01SRC1 -> RO01DST1
+        Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
+        int n = scanner.nextInt();
+        List<Tranzactie> tranzactii = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            int id = scanner.nextInt();
+            double suma = scanner.nextDouble();
+            String data = scanner.next();
+            String contSursa = scanner.next();
+            String contDestinatie = scanner.next();
+            TipTranzactie tipTranzactie = TipTranzactie.valueOf(scanner.next());
 
-        System.out.println("TODO: implementează exercițiul 1");
+            Tranzactie tranzactie = new Tranzactie(id, suma, data, contSursa, contDestinatie, tipTranzactie);
+            tranzactie.setNote("procesat");
+            tranzactii.add(tranzactie);
+        }
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(OUTPUT_FILE))) {
+            oos.writeObject(tranzactii);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<Tranzactie> deserializate = new ArrayList<>();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(OUTPUT_FILE))) {
+            deserializate = (List<Tranzactie>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        while (scanner.hasNext()) {
+            String comanda = scanner.next();
+            if ("LIST".equals(comanda)) {
+                for (Tranzactie t : deserializate) {
+                    System.out.println(t);
+                }
+            } else if ("FILTER".equals(comanda)) {
+                String prefixLuna = scanner.next();
+                boolean gasit = false;
+                for (Tranzactie t : deserializate) {
+                    if (t.getData().startsWith(prefixLuna)) {
+                        System.out.println(t);
+                        gasit = true;
+                    }
+                }
+                if (!gasit) {
+                    System.out.println("Niciun rezultat.");
+                }
+            } else if ("NOTE".equals(comanda)) {
+                int id = scanner.nextInt();
+                boolean gasit = false;
+                for (Tranzactie t : deserializate) {
+                    if (t.getId() == id) {
+                        gasit = true;
+                        System.out.println("NOTE[" + id + "]: " + t.getNote());
+                        break;
+                    }
+                }
+                if (!gasit) {
+                    System.out.println("NOTE[" + id + "]: not found");
+                }
+            } else {
+                scanner.nextLine();
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 package com.pao.laboratory09.exercise1;
 
-public enum TipTranzitie {
+public enum TipTranzactie {
     CREDIT, DEBIT;
-    private TipTranzitie () {};
+    private TipTranzactie() {};
 }
