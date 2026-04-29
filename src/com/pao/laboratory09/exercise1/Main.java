@@ -6,7 +6,7 @@ import java.util.*;
 public class Main {
     private static final String OUTPUT_FILE = "paoj-2026/output/lab09_ex1.ser";
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
         int n = scanner.nextInt();
         List<Tranzactie> tranzactii = new ArrayList<>();

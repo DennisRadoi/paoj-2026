@@ -1,6 +1,7 @@
 package com.pao.laboratory09.exercise2;
 
 import com.pao.laboratory09.exercise1.TipTranzactie;
+import com.pao.laboratory09.exercise1.Tranzactie;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -31,6 +32,17 @@ public class Main {
         // Format linie output:
         //   [idx] id=<id> data=<data> tip=<CREDIT|DEBIT> suma=<suma:.2f> RON status=<STATUS>
 
-        System.out.println("TODO: implementează exercițiul 2");
+        Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
+        int n = scanner.nextInt();
+        List<Tranzactie> tranzactii = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            int id = scanner.nextInt();
+            double suma = scanner.nextDouble();
+            String data = scanner.next();
+            TipTranzactie tipTranzactie = TipTranzactie.valueOf(scanner.next());
+
+            Tranzactie tranzactie = new Tranzactie(id, suma, data, tipTranzactie);
+        }
+
     }
 }
