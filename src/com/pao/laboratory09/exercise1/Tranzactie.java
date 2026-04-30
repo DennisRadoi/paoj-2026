@@ -21,6 +21,13 @@ public class Tranzactie implements Serializable {
         this.tip = tip;
     }
 
+    public Tranzactie(int id, double suma, String data, TipTranzactie tip) {
+        this.id = id;
+        this.suma = suma;
+        this.data = data;
+        this.tip = tip;
+    }
+
     public void setNote(String note) {
         this.note = note;
     }
@@ -36,6 +43,11 @@ public class Tranzactie implements Serializable {
     public String getNote() {
         return note;
     }
+
+    public double getSuma() { return suma; }
+
+    public TipTranzactie getTip() { return tip; }
+
 
     public String toString() {
         return String.format(java.util.Locale.US, "[%d] %s %s: %.2f RON | %s -> %s",
