@@ -12,6 +12,7 @@ public final class Transaction {
     private final String channel;
     private final int score;
     private final boolean flagged;
+    private String accountId;
 
     public Transaction(int id, BigDecimal amount, LocalDate date, String country, String channel, int score, boolean flagged) {
         this.id = id;
@@ -21,6 +22,21 @@ public final class Transaction {
         this.channel = channel;
         this.score = score;
         this.flagged = flagged;
+    }
+
+    public Transaction(int id, BigDecimal amount, LocalDate date, String country, String channel, int score, boolean flagged, String accountId) {
+        this.id = id;
+        this.amount = amount;
+        this.date = date;
+        this.country = country;
+        this.channel = channel;
+        this.score = score;
+        this.flagged = flagged;
+        this.accountId = accountId;
+    }
+
+    public String getAccountId() {
+        return accountId;
     }
 
     public int getId() {
