@@ -4,14 +4,15 @@ import com.pao.project.services.IOperatiiCitireService;
 
 import java.util.Scanner;
 
-public abstract class Utilizator implements IOperatiiCitireService {
-    final protected int id;
+public class Utilizator implements IOperatiiCitireService {
+    protected int id;
     protected int varsta;
     protected String email;
     protected String data_nasterii;
     protected String telefon;
     protected String nume;
 
+    public Utilizator() {}
     public Utilizator(int id, String data_nasterii, String telefon, String email, int varsta, String nume) {
         this.id = id;
         this.data_nasterii = data_nasterii;
@@ -20,6 +21,7 @@ public abstract class Utilizator implements IOperatiiCitireService {
         this.varsta = varsta;
         this.nume = nume;
     }
+    public void setId(int id) {this.id = id;}
     public int getId(){
         return id;
     }
@@ -64,7 +66,7 @@ public abstract class Utilizator implements IOperatiiCitireService {
         this.telefon = telefon;
     }
 
-    public abstract String getTipUtilizator();
+//    public abstract String getTipUtilizator();
 
     public void citeste(Scanner in) {
         System.out.print("Nume: ");

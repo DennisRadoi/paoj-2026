@@ -5,24 +5,34 @@ import com.pao.project.services.IOperatiiCitireService;
 import java.util.Objects;
 import java.util.Scanner;
 
-public abstract class Produs implements Comparable<Produs>, IOperatiiCitireService {
-    protected CodProdus cod;
+public class Produs implements Comparable<Produs>, IOperatiiCitireService {
+    protected String cod;
     protected String nume;
     protected String descriere;
     protected double pret;
+    protected int restaurant_id;
 
-    public Produs(CodProdus cod, String nume, String descriere, double pret) {
+    public Produs() {}
+    public Produs(String cod, String nume, String descriere, double pret) {
         this.cod = cod;
         this.nume = nume;
         this.descriere = descriere;
         this.pret = pret;
     }
 
-    public CodProdus getId() {
+    public int getRestaurant() {
+        return restaurant_id;
+    }
+
+    public void setRestaurant_id(int restaurant_id) {
+        this.restaurant_id = restaurant_id;
+    }
+
+    public String getId() {
         return cod;
     }
 
-    public void setId(CodProdus cod) {
+    public void setId(String cod) {
         this.cod = cod;
     }
 

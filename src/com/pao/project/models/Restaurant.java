@@ -10,8 +10,9 @@ import java.util.Scanner;
 public class Restaurant implements IOperatiiCitireService {
     private String nume;
     private Adresa adresa;
+    private int adresa_id;
     private double rating = 0;
-    final private int id;
+    private int id;
     private ArrayList<Produs> meniu;
     private HashMap<Utilizator, Integer> note;
     public Restaurant(String nume, Adresa adresa, int id, HashMap<Utilizator, Integer> note){
@@ -28,9 +29,17 @@ public class Restaurant implements IOperatiiCitireService {
             this.rating = (double) suma / note.size();
         }
     }
-
+    public Restaurant() {}
     public List<Produs> getMeniu() {
         return meniu;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getRating() {
@@ -41,12 +50,12 @@ public class Restaurant implements IOperatiiCitireService {
         this.rating = rating;
     }
 
-    public Adresa getAdresa() {
-        return adresa;
+    public int getAdresa() {
+        return adresa_id;
     }
 
-    public void setAdresa(Adresa adresa) {
-        this.adresa = adresa;
+    public void setAdresa(int adresa) {
+        this.adresa_id = adresa;
     }
 
     public String getNume() {

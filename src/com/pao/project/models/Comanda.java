@@ -7,18 +7,20 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Comanda implements IOperatiiCitireService {
-    final private int id;
-    private Client client;
-    private Restaurant restaurant;
-    private Livrator livrator;
+    private int id;
+    private int client_id;
+    private int restaurant_id;
+    private int livrator;
     private ArrayList<Produs> produse;
     private double pretTotal;
-    private StatusComanda status;
+    private String status;
 
-    public Comanda(int id, Client client, Restaurant restaurant, Livrator livrator, ArrayList<Produs> produse, StatusComanda status) {
+    public Comanda() {}
+
+    public Comanda(int id, int client_id, int restaurant_id, int livrator, ArrayList<Produs> produse, String status) {
         this.id = id;
-        this.client = client;
-        this.restaurant = restaurant;
+        this.client_id = client_id;
+        this.restaurant_id = restaurant_id;
         this.livrator = livrator;
         this.produse = produse;
         this.status = status;
@@ -27,32 +29,32 @@ public class Comanda implements IOperatiiCitireService {
             this.pretTotal += produse.get(i).getPret();
         }
     }
-
+    public void setId(int id) {this.id = id;}
     public int getId() {
         return id;
     }
 
-    public Client getClient() {
-        return client;
+    public int getClient_id() {
+        return client_id;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(int client_id) {
+        this.client_id = client_id;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public int getRestaurant() {
+        return restaurant_id;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurant(int restaurant_id) {
+        this.restaurant_id = restaurant_id;
     }
 
-    public Livrator getLivrator() {
+    public int getLivrator() {
         return livrator;
     }
 
-    public void setLivrator(Livrator livrator) {
+    public void setLivrator(int livrator) {
         this.livrator = livrator;
     }
 
@@ -72,19 +74,19 @@ public class Comanda implements IOperatiiCitireService {
         this.pretTotal = pretTotal;
     }
 
-    public StatusComanda getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(StatusComanda status) {
-        if (status == null) {
-            throw new StareComandaInvalidaException("Statusul comenzii nu poate fi null.");
-        }
-        if (this.status != null && this.status.eFinal() && this.status != status) {
-            throw new StareComandaInvalidaException(
-                    "Comanda este deja intr-o stare finala (" + this.status + ") si nu mai poate fi modificata."
-            );
-        }
+    public void setStatus(String status) {
+//        if (status == null) {
+//            throw new StareComandaInvalidaException("Statusul comenzii nu poate fi null.");
+//        }
+//        if (this.status != null && this.status.eFinal() && this.status != status) {
+//            throw new StareComandaInvalidaException(
+//                    "Comanda este deja intr-o stare finala (" + this.status + ") si nu mai poate fi modificata."
+//            );
+//        }
         this.status = status;
     }
 
@@ -102,21 +104,21 @@ public class Comanda implements IOperatiiCitireService {
         return total;
     }
 
-    public String toString() {
-        String numeLivrator = (livrator != null) ? livrator.getNume() : "Neasignat";
-        return "Comanda #" + id + " | Status: " + status +
-                " | Client: " + client.getNume() + " | Restaurant: " + restaurant.getNume() +
-                " | Livrator: " + numeLivrator + " | Total: " + pretTotal + " RON (" + produse.size() + " produse)";
-    }
+//    public String toString() {
+//        String numeLivrator = (livrator != null) ? livrator.getNume() : "Neasignat";
+//        return "Comanda #" + id + " | Status: " + status +
+//                " | Client: " + client.getNume() + " | Restaurant: " + restaurant_id.getNume() +
+//                " | Livrator: " + numeLivrator + " | Total: " + pretTotal + " RON (" + produse.size() + " produse)";
+//    }
 
     public void citeste(Scanner in) {
-        System.out.print("Pret total comanda: ");
-        this.pretTotal = Double.parseDouble(in.nextLine());
-        System.out.print("Status comanda (INITIALIZATA, IN_PREPARARE, IN_LIVRARE, LIVRATA, RETURNATA, ANULATA): ");
-        try {
-            this.status = StatusComanda.valueOf(in.nextLine().trim().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new StareComandaInvalidaException("Status comanda invalid.");
-        }
+//        System.out.print("Pret total comanda: ");
+//        this.pretTotal = Double.parseDouble(in.nextLine());
+//        System.out.print("Status comanda (INITIALIZATA, IN_PREPARARE, IN_LIVRARE, LIVRATA, RETURNATA, ANULATA): ");
+//        try {
+//            this.status = String.valueOf(in.nextLine().trim().toUpperCase());
+//        } catch (IllegalArgumentException e) {
+//            throw new StareComandaInvalidaException("Status comanda invalid.");
+//        }
     }
 }

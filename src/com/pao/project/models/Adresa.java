@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Adresa implements IOperatiiCitireService {
+    private int id;
     private String judet;
     private String localitate;
     private String strada;
