@@ -21,7 +21,7 @@ public class ComandaRepository implements Repository<Comanda, Integer> {
         c.setClient(rs.getInt("client_id"));
         c.setRestaurant(rs.getInt("restaurant_id"));
         c.setLivrator(rs.getInt("livrator_id"));
-        c.setPretTotal(rs.getDouble("pretTotal"));
+        c.setPretTotal(rs.getDouble("pret_total"));
         c.setStatus(rs.getString("status"));
         return c;
     }
