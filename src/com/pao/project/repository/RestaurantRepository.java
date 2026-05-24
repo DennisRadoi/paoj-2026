@@ -37,7 +37,7 @@ public class RestaurantRepository implements Repository<Restaurant, Integer> {
                 }
             }
         } catch (IOException e) {
-            throw new SQLException("Eroare la obtinerea conexiunii: " + e.getMessage(), e);
+            throw new SQLException(e);
         }
     }
 

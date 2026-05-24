@@ -9,26 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ClientRepository implements Repository<Client, Integer> {
+public class LivratorRepository implements Repository<Livrator, Integer> {
 
     private Connection getConnection() throws SQLException, IOException {
         return DatabaseConnection.getInstance().getConnection();
     }
 
-    private Client mapRow(ResultSet rs) throws SQLException {
-        Client r = new Client();
+    private Livrator mapRow(ResultSet rs) throws SQLException {
+        Livrator r = new Livrator();
         r.setId(rs.getInt("id"));
         r.setData_nasterii(rs.getString("data_nasterii"));
         r.setTelefon(rs.getString("telefon"));
         r.setEmail(rs.getString("email"));
         r.setVarsta(rs.getInt("varsta"));
         r.setNume(rs.getString("nume"));
-        r.setAdresa(rs.getInt("adresa_id"));
+        r.setVehicul(rs.getString("vehicul"));
+        r.setEsteDisponibil(rs.getInt("esteDisponibil"));
         return r;
     }
 
     @Override
-    public void save(Client r) throws SQLException {
+    public void save(Livrator r) throws SQLException {
         Connection connection;
         try {
             connection = getConnection();
@@ -64,15 +65,16 @@ public class ClientRepository implements Repository<Client, Integer> {
                 }
             }
 
-            String insertClientSql =
+            String insertLivratorSql =
                     """
-                    INSERT INTO client (id, adresa_id)
-                    VALUES (?, ?)
+                    INSERT INTO livrator (id, vehicul, este_disponibil)
+                    VALUES (?, ?, ?)
                     """;
 
-            try (PreparedStatement ps = connection.prepareStatement(insertClientSql)) {
+            try (PreparedStatement ps = connection.prepareStatement(insertLivratorSql)) {
                 ps.setInt(1, r.getId());
-                ps.setInt(2, r.getAdresa());
+                ps.setString(2, r.getVehicul());
+                ps.setInt(3, r.isEsteDisponibil());
                 ps.executeUpdate();
             }
             connection.commit();
@@ -85,8 +87,8 @@ public class ClientRepository implements Repository<Client, Integer> {
     }
 
     @Override
-    public Optional<Client> findById(Integer id) throws SQLException {
-        String sql = "SELECT id, adresa_id FROM client WHERE id = ?";
+    public Optional<Livrator> findById(Integer id) throws SQLException {
+        String sql = "SELECT id, vehicul, este_disponibil FROM livrator WHERE id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -99,9 +101,9 @@ public class ClientRepository implements Repository<Client, Integer> {
     }
 
     @Override
-    public List<Client> findAll() throws SQLException {
-        String sql = "SELECT id, adresa_id FROM client ORDER BY id";
-        List<Client> list = new ArrayList<>();
+    public List<Livrator> findAll() throws SQLException {
+        String sql = "SELECT id, vehicul, este_disponibil FROM livrator ORDER BY id";
+        List<Livrator> list = new ArrayList<>();
         try (PreparedStatement ps = getConnection().prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) list.add(mapRow(rs));
@@ -112,7 +114,7 @@ public class ClientRepository implements Repository<Client, Integer> {
     }
 
     @Override
-    public void update(Client r) throws SQLException {
+    public void update(Livrator r) throws SQLException {
         Connection connection;
         try {
             connection = getConnection();
@@ -141,17 +143,17 @@ public class ClientRepository implements Repository<Client, Integer> {
                 throw new SQLException(e);
             }
 
-            String updateClientSql =
-                        """
-                        UPDATE client
-                        SET adresa
-                        WHERE id = ?
-                        """;
+            String updateLivratorSql =
+                    """
+                    UPDATE livrator
+                    SET vehicul = ?, este_disponibil = ?
+                    WHERE id = ?
+                    """;
             try (PreparedStatement ps = getConnection().
-                prepareStatement(updateClientSql)) {
-                ps.setInt(1, r.getAdresa());
-                ps.setInt(2, r.getId());
-
+                    prepareStatement(updateLivratorSql)) {
+                ps.setString(1, r.getVehicul());
+                ps.setInt(2, r.isEsteDisponibil());
+                ps.setInt(3, r.getId());
                 ps.executeUpdate();
             } catch (IOException e) {
                 throw new SQLException(e);
@@ -176,3 +178,4 @@ public class ClientRepository implements Repository<Client, Integer> {
         }
     }
 }
+

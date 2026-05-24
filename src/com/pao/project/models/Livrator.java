@@ -5,15 +5,19 @@ import java.util.Scanner;
 public class Livrator extends Utilizator {
     private String vehicul;
     private int nrComenzi;
-    private boolean esteDisponibil;
+    private int esteDisponibil;
 
-    public Livrator(int id, String data_nasterii, String telefon, String email, int varsta, String nume, String vehicul, boolean esteDisponibil, int nrComenzi) {
+    public Livrator(int id, String data_nasterii, String telefon, String email, int varsta, String nume, String vehicul, int esteDisponibil, int nrComenzi) {
         super(id, data_nasterii, telefon, email, varsta, nume);
         this.vehicul = vehicul;
         this.esteDisponibil = esteDisponibil;
         this.nrComenzi = nrComenzi;
     }
-
+    public Livrator() {}
+    public Livrator(String vehicul, int esteDisponibil) {
+        this.vehicul = vehicul;
+        this.esteDisponibil = esteDisponibil;
+    }
     public String getVehicul() {
         return vehicul;
     }
@@ -22,11 +26,11 @@ public class Livrator extends Utilizator {
         this.vehicul = vehicul;
     }
 
-    public boolean isEsteDisponibil() {
+    public int isEsteDisponibil() {
         return esteDisponibil;
     }
 
-    public void setEsteDisponibil(boolean esteDisponibil) {
+    public void setEsteDisponibil(int esteDisponibil) {
         this.esteDisponibil = esteDisponibil;
     }
 

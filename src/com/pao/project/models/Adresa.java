@@ -56,6 +56,24 @@ public class Adresa implements IOperatiiCitireService {
             this.apartament = apartament;
         }
     }
+    public Adresa(int id, String judet, String localitate,
+                  String strada, int numar, String bloc, int scara, int apartament) {
+        this.id = id;
+        this.judet = judet.trim();
+        this.localitate = localitate.trim();
+        this.strada = strada.trim();
+        this.numar = numar;
+        this.bloc = bloc;
+        this.scara = scara;
+        this.apartament = apartament;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getJudet() {
         return judet;
@@ -83,6 +101,34 @@ public class Adresa implements IOperatiiCitireService {
 
     public int getApartament() {
         return apartament;
+    }
+
+    public void setJudet(String judet) {
+        this.judet = judet;
+    }
+
+    public void setLocalitate(String localitate) {
+        this.localitate = localitate;
+    }
+
+    public void setStrada(String strada) {
+        this.strada = strada;
+    }
+
+    public void setNumar(int numar) {
+        this.numar = numar;
+    }
+
+    public void setBloc(String bloc) {
+        this.bloc = bloc;
+    }
+
+    public void setScara(int scara) {
+        this.scara = scara;
+    }
+
+    public void setApartament(int apartament) {
+        this.apartament = apartament;
     }
 
     @Override

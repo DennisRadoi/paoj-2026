@@ -20,6 +20,13 @@ public class Produs implements Comparable<Produs>, IOperatiiCitireService {
         this.pret = pret;
     }
 
+    public Produs(String nume, String descriere, double pret, int restaurant_id) {
+        this.nume = nume;
+        this.descriere = descriere;
+        this.pret = pret;
+        this.restaurant_id = restaurant_id;
+    }
+
     public int getRestaurant() {
         return restaurant_id;
     }
@@ -65,7 +72,7 @@ public class Produs implements Comparable<Produs>, IOperatiiCitireService {
         Produs produs = (Produs) o;
         return cod.equals(produs.cod);
     }
-    public abstract String getTip();
+//    public abstract String getTip();
 
     public int hashCode() {
         return Objects.hashCode(getId());

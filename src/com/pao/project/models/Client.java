@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Client extends Utilizator {
     private Adresa adresa;
-    private ArrayList<CardBancar> listaCarduri;
     private int adresa_id;
+    private ArrayList<CardBancar> listaCarduri;
     public Client(int id, String data_nasterii, String telefon, String email, int varsta, String nume, Adresa adresa) {
         super(id, data_nasterii, telefon, email, varsta, nume);
         this.adresa = adresa;
@@ -17,8 +17,12 @@ public class Client extends Utilizator {
         return adresa_id;
     }
 
-    public void setAdresa(int adresa) {
+    public Client(int adresa_id) {
         this.adresa_id = adresa_id;
+    }
+
+    public void setAdresa(int adresa) {
+        this.adresa_id = adresa;
     }
 
     @Override

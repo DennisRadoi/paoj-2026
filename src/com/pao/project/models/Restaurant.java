@@ -29,6 +29,11 @@ public class Restaurant implements IOperatiiCitireService {
             this.rating = (double) suma / note.size();
         }
     }
+
+    public Restaurant(String nume, int adresa_id) {
+        this.nume = nume;
+        this.adresa_id = adresa_id;
+    }
     public Restaurant() {}
     public List<Produs> getMeniu() {
         return meniu;
