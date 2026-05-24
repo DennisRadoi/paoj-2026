@@ -35,17 +35,16 @@ CREATE TABLE utilizator (
 );
 
 CREATE TABLE client (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    id          INTEGER PRIMARY KEY,
     adresa_id   INTEGER NOT NULL,
     FOREIGN KEY (id) REFERENCES utilizator (id) ON DELETE CASCADE,
     FOREIGN KEY (adresa_id) REFERENCES adresa (id)
 );
 
 CREATE TABLE livrator (
-    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    id               INTEGER PRIMARY KEY,
     vehicul          TEXT,
     este_disponibil  INTEGER NOT NULL DEFAULT 1,
-    nr_comenzi       INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (id) REFERENCES utilizator (id) ON DELETE CASCADE
 );
 
@@ -121,7 +120,7 @@ CREATE TABLE comanda (
     client_id       INTEGER NOT NULL,
     restaurant_id   INTEGER NOT NULL,
     livrator_id     INTEGER,
-    pret_total      REAL    NOT NULL DEFAULT 0,
+    pret_total      REAL NOT NULL,
     status          TEXT    NOT NULL CHECK (
         status IN (
             'INITIALIZATA',
@@ -132,9 +131,9 @@ CREATE TABLE comanda (
             'ANULATA'
         )
     ),
-    FOREIGN KEY (client_id) REFERENCES client (id),
-    FOREIGN KEY (restaurant_id) REFERENCES restaurant (id),
-    FOREIGN KEY (livrator_id) REFERENCES livrator (id)
+    FOREIGN KEY (client_id) REFERENCES client (id) ON DELETE CASCADE,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE,
+    FOREIGN KEY (livrator_id) REFERENCES livrator (id) ON DELETE CASCADE
 );
 
 CREATE TABLE comanda_produs (

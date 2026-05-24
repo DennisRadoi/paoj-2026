@@ -1,11 +1,9 @@
 package com.pao.project.models;
 
-import com.pao.project.services.IOperatiiCitireService;
-
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Adresa implements IOperatiiCitireService {
+public class Adresa {
     private int id;
     private String judet;
     private String localitate;

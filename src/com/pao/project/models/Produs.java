@@ -1,11 +1,10 @@
 package com.pao.project.models;
 
-import com.pao.project.services.IOperatiiCitireService;
 
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Produs implements Comparable<Produs>, IOperatiiCitireService {
+public class Produs implements Comparable<Produs> {
     protected String cod;
     protected String nume;
     protected String descriere;

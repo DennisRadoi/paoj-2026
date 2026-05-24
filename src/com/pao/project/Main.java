@@ -13,6 +13,8 @@ public class Main {
     static ComandaRepository cr = new ComandaRepository();
     static ProdusRepository pr = new ProdusRepository();
     static UtilizatorRepository u = new UtilizatorRepository();
+    static ClientRepository clr = new ClientRepository();
+    static LivratorRepository lr = new LivratorRepository();
     static RestaurantRepository rr = new RestaurantRepository();
     static AdresaRepository adr = new AdresaRepository();
     static SQLService ss = SQLService.getInstance();
@@ -20,44 +22,70 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         incarcaDate();
         Adresa a1 = new Adresa("Calarasi", "Calarasi", "Zefirului", 26, "I19", 2, 22);
+        Adresa a2 = new Adresa("Bucuresti", "Sector 6", "Precizei", 24, "B2", 1, 985);
         adr.save(a1);
+        adr.save(a2);
         System.out.println("ETAPA 2 PROIECT\n");
 
         // Actiunea 1 -> ADAUGA Restaurant
         Restaurant r1 = new Restaurant("Pizzeria galleto", a1.getId());
         rr.save(r1);
         audit.log("add_resaurant");
-        System.out.println("Restaurant adaugat " + r1);
+        System.out.println("1. Restaurant adaugat " + r1);
 
         // Actiunea 2 -> ADAUGA produs
-        Produs p = new Produs("Pizza", "Blat cu sos", 30, r1.getId());
-        pr.save(p);
+        Produs p1 = new Produs("Pizza", "Blat cu sos", 30, r1.getId());
+        pr.save(p1);
         audit.log("add_produs");
-        System.out.println("Produs adaugat " + p);
+        System.out.println("2. Produs adaugat " + p1);
 
-        // Actiunea 3 -> Adauga utilizator
+        // Actiunea 3 -> Adauga client
+        Client c1 = new Client("21-04-2001", "0788999000", "miau@gmail.com", 25, "Andrei Alex", a2.getId());
+        clr.save(c1);
+        audit.log("add_client");
+        System.out.println("3. Client adaugat " + c1);
 
-        // Actiunea 4 -> Tranzactia
+        // Actiunea 4 -> Adauga livrator
+        Livrator l1 = new Livrator("26-03-2005", "0734565780", "abdul@gmail.com", 21, "Abdul Abdul" ,"Bicicleta", 1);
+        lr.save(l1);
+        audit.log("add_livrator");
+        System.out.println("4. Livrator adaugat " + l1);
 
-        // Actiunea 5 -> Q1
+        // Actiunea 5 -> Adauga comanda
+        Comanda com1 = new Comanda(c1.getId(), r1.getId(), l1.getId(), 60, "IN_LIVRARE");
+        cr.save(com1);
+        audit.log("add_comanda");
+        System.out.println("5. Comanda adaugat " + com1);
 
-        // Actiunea 6 -> Q2
+        ComandaProdus cp1 = new ComandaProdus(com1.getId(), p1.getId());
+        // Actiunea 5 -> Tranzactia
 
-        // Actiunea 7 -> Q3
+        // Actiunea 6 -> Q1
 
-        // Actiunea 8 -> Sterge un restaurant
+        // Actiunea 7 -> Q2
+
+        // Actiunea 8 -> Q3
+
+        // Actiunea 9 -> Sterge un restaurant
         rr.delete(r1.getId());
         audit.log("remove_restaurant");
         System.out.println("A fost sters restaurantul cu id" + r1.getId());
 
-        // Actiunea 9 -> Listeaza toate comenzile
+        // Actiunea 10 -> Listeaza toate comenzile
         List<Comanda> comenzi = cr.findAll();
         audit.log("list_all_comenzi");
         for (Comanda c : comenzi) {
             System.out.println(c);
         }
 
-        // Actiunea 10 -> Cauta livrator dupa ID
+        // Actiunea 11 -> Cauta livrator dupa ID
+        lr.findById(l1.getId()).ifPresentOrElse(
+                l -> System.out.println("11. Livrator gasit " + l),
+                () -> System.out.println("11. Nu a fost gasit livratorul")
+        );
+        audit.log("find_livrator_by_id");
+
+        // Actiunea 12 -> Actualizeaza restaurant
 
 
     }
@@ -444,60 +472,6 @@ public class Main {
 //    }
 
     private static void incarcaDatePredefinite(){
-        Client c1 = new Client(1, "Popescu", "Andrei", "0711111111", 120, "andrei@mail.com", new Adresa());
-        Client c2 = new Client(2, "Ionescu", "Maria", "0722222222", 80, "maria@mail.com", new Adresa());
-        Livrator l1 = new Livrator(10, "Georgescu", "Vlad", "0733333333", 0, "vlad@mail.com", "B123ABC", true, 4);
-        Livrator l2 = new Livrator(11, "Dobre", "Radu", "0744444444", 0, "radu@mail.com", "B456XYZ", false, 45);
-
-        c1.adaugaCard(new CardBancar(1001, "1111222233334444", "Andrei Popescu", "12/28", 123, 5000));
-        c1.adaugaCard(new CardBancar(1002, "5555666677778888", "Andrei Popescu", "11/27", 456, 2500));
-        c2.adaugaCard(new CardBancar(1003, "9999000011112222", "Maria Ionescu", "10/29", 789, 3000));
-
-//        UTILIZATOR_SERVICE.addUtilizator(c1);
-//        UTILIZATOR_SERVICE.addUtilizator(c2);
-//        UTILIZATOR_SERVICE.addUtilizator(l1);
-//        UTILIZATOR_SERVICE.addUtilizator(l2);
-
-        Restaurant r1 = new Restaurant("Pizza House", new Adresa(), 101, new java.util.HashMap<>());
-        Restaurant r2 = new Restaurant("Sweet & Fresh", new Adresa(), 102, new java.util.HashMap<>());
-
-        Produs p1 = new Mancare(new CodProdus("M001123"), "Pizza Margherita", "Mancare", 32.5, 15, false, true, 700, 450);
-        Produs p2 = new Mancare(new CodProdus("M002213"), "Burger Vita", "Mancare", 28.0, 20, false, false, 650, 500);
-        Produs p3 = new Bautura(new CodProdus("B001414"), "Cola", "Bautura", 9.5, 10, true, false, 0.5, true);
-
-        Produs p4 = new Desert(new CodProdus("D00123"), "Cheesecake", "Desert", 18.0, 10, false, true, true, false);
-        Produs p5 = new Desert(new CodProdus("D0022"), "Tiramisu", "Desert", 20.0, 12, false, false, true, true);
-        Produs p6 = new Bautura(new CodProdus("B00241"), "Fresh Portocale", "Bautura", 14.0, 8, false, true, 0.4, false);
-
-        r1.adaugaProdusMeniu(p1);
-        r1.adaugaProdusMeniu(p2);
-        r1.adaugaProdusMeniu(p3);
-
-        r2.adaugaProdusMeniu(p4);
-        r2.adaugaProdusMeniu(p5);
-        r2.adaugaProdusMeniu(p6);
-
-//        RESTAURANT_SERVICE.addRestaurant(r1);
-//        RESTAURANT_SERVICE.addRestaurant(r2);
-
-        ArrayList<Produs> produseComanda1 = new ArrayList<>();
-        produseComanda1.add(p1);
-        produseComanda1.add(p3);
-
-        ArrayList<Produs> produseComanda2 = new ArrayList<>();
-        produseComanda2.add(p4);
-        produseComanda2.add(p6);
-
-        ArrayList<Produs> produseComanda3 = new ArrayList<>();
-        produseComanda3.add(p4);
-        produseComanda3.add(p4);
-
-//        Comanda com1 = new Comanda(5001, c1, r1, l1, produseComanda1, StatusComanda.LIVRATA);
-//        Comanda com2 = new Comanda(5002, c2, r2, l2, produseComanda2, StatusComanda.IN_LIVRARE);
-//        Comanda com3 = new Comanda(5003, c1, r1, null, produseComanda3, StatusComanda.INITIALIZATA);
-
-//        COMANDA_SERVICE.addComanda(com1);
-//        COMANDA_SERVICE.addComanda(com2);
-//        COMANDA_SERVICE.addComanda(com3);
+//
     }
 }

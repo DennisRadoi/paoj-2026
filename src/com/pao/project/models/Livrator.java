@@ -7,11 +7,10 @@ public class Livrator extends Utilizator {
     private int nrComenzi;
     private int esteDisponibil;
 
-    public Livrator(int id, String data_nasterii, String telefon, String email, int varsta, String nume, String vehicul, int esteDisponibil, int nrComenzi) {
-        super(id, data_nasterii, telefon, email, varsta, nume);
+    public Livrator(String data_nasterii, String telefon, String email, int varsta, String nume, String vehicul, int esteDisponibil) {
+        super(data_nasterii, telefon, email, varsta, nume);
         this.vehicul = vehicul;
         this.esteDisponibil = esteDisponibil;
-        this.nrComenzi = nrComenzi;
     }
     public Livrator() {}
     public Livrator(String vehicul, int esteDisponibil) {
@@ -57,7 +56,6 @@ public class Livrator extends Utilizator {
         System.out.print("Vehicul: ");
         this.vehicul = in.nextLine();
         System.out.print("Disponibil (true/false): ");
-        this.esteDisponibil = Boolean.parseBoolean(in.nextLine());
         System.out.print("Numar comenzi: ");
         this.nrComenzi = Integer.parseInt(in.nextLine());
     }

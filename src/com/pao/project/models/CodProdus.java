@@ -1,12 +1,12 @@
 package com.pao.project.models;
 
 import com.pao.project.exceptions.CodProdusInvalidException;
-import com.pao.project.services.IOperatiiCitireService;
+
 
 import java.util.Objects;
 import java.util.Scanner;
 
-public final class CodProdus implements IOperatiiCitireService {
+public final class CodProdus {
     private final String cod;
     public CodProdus(String _cod){
         if (_cod == null || _cod.trim().isEmpty()) {

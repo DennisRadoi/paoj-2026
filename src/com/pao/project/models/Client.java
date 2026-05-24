@@ -7,10 +7,9 @@ public class Client extends Utilizator {
     private Adresa adresa;
     private int adresa_id;
     private ArrayList<CardBancar> listaCarduri;
-    public Client(int id, String data_nasterii, String telefon, String email, int varsta, String nume, Adresa adresa) {
-        super(id, data_nasterii, telefon, email, varsta, nume);
-        this.adresa = adresa;
-        this.listaCarduri = new ArrayList<>();
+    public Client(String data_nasterii, String telefon, String email, int varsta, String nume, int adresa) {
+        super(data_nasterii, telefon, email, varsta, nume);
+        this.adresa_id = adresa;
     }
     public Client() {}
     public int getAdresa() {

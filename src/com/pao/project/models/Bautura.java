@@ -10,7 +10,7 @@ public class Bautura extends Produs{
     private boolean rece;
 
     public Bautura(CodProdus cod, String nume, String descriere, double pret, int volumMl, boolean esteCarbogazoasa, boolean contineAlcool, double procentAlcool, boolean rece) {
-        super(cod, nume, descriere, pret);
+//        super(cod, nume, descriere, pret);
         this.volumMl = volumMl;
         this.esteCarbogazoasa = esteCarbogazoasa;
         this.contineAlcool = contineAlcool;

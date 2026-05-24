@@ -1,12 +1,12 @@
 package com.pao.project.models;
 
 import com.pao.project.exceptions.StareComandaInvalidaException;
-import com.pao.project.services.IOperatiiCitireService;
+
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Comanda implements IOperatiiCitireService {
+public class Comanda{
     private int id;
     private int client_id;
     private int restaurant_id;
@@ -17,17 +17,13 @@ public class Comanda implements IOperatiiCitireService {
 
     public Comanda() {}
 
-    public Comanda(int id, int client_id, int restaurant_id, int livrator, ArrayList<Produs> produse, String status) {
-        this.id = id;
+    public Comanda(int client_id, int restaurant_id, int livrator, double pretTotal, String status) {
         this.client_id = client_id;
         this.restaurant_id = restaurant_id;
         this.livrator = livrator;
-        this.produse = produse;
         this.status = status;
-        this.pretTotal = 0;
-        for (int i = 0; i < produse.size(); i++){
-            this.pretTotal += produse.get(i).getPret();
-        }
+        this.pretTotal = pretTotal;
+
     }
     public void setId(int id) {this.id = id;}
     public int getId() {

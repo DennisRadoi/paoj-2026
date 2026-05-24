@@ -1,10 +1,9 @@
 package com.pao.project.models;
 
-import com.pao.project.services.IOperatiiCitireService;
 
 import java.util.Scanner;
 
-public class CardBancar implements IOperatiiCitireService {
+public class CardBancar  {
     private final int id;
     private String numeTitular;
     private String cvv;

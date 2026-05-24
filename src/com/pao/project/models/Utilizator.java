@@ -1,10 +1,9 @@
 package com.pao.project.models;
 
-import com.pao.project.services.IOperatiiCitireService;
 
 import java.util.Scanner;
 
-public class Utilizator implements IOperatiiCitireService {
+public class Utilizator {
     protected int id;
     protected int varsta;
     protected String email;
@@ -13,8 +12,7 @@ public class Utilizator implements IOperatiiCitireService {
     protected String nume;
 
     public Utilizator() {}
-    public Utilizator(int id, String data_nasterii, String telefon, String email, int varsta, String nume) {
-        this.id = id;
+    public Utilizator(String data_nasterii, String telefon, String email, int varsta, String nume) {
         this.data_nasterii = data_nasterii;
         this.telefon = telefon;
         this.email = email;

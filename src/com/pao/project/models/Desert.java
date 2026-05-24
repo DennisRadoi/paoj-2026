@@ -10,7 +10,7 @@ public class Desert extends Produs{
     private boolean esteRece;
 
     public Desert(CodProdus cod, String nume, String descriere, double pret, int gramaj, boolean contineZahar, boolean contineGluten, boolean contineLactoza, boolean esteRece) {
-        super(cod, nume, descriere, pret);
+//        super(cod, nume, descriere, pret);
         this.gramaj = gramaj;
         this.contineZahar = contineZahar;
         this.contineGluten = contineGluten;

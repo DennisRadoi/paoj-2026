@@ -10,7 +10,7 @@ public class Mancare extends Produs {
     private int calorii;
 
     public Mancare(CodProdus cod, String nume, String descriere, double pret, int gramaj, boolean esteVegan, boolean estePicant, int nivelPicant, int calorii) {
-        super(cod, nume, descriere, pret);
+//        super(cod, nume, descriere, pret);
         this.gramaj = gramaj;
         this.esteVegan = esteVegan;
         this.estePicant = estePicant;
