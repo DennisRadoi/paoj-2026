@@ -70,7 +70,7 @@ public class RestaurantRepository implements Repository<Restaurant, Integer> {
 
     @Override
     public void update(Restaurant r) throws SQLException {
-        String sql = "UPDATE restaurant SET nume = ?, nume = ?, adresa_id = ? WHERE id = ?";
+        String sql = "UPDATE restaurant SET nume = ?, adresa_id = ? WHERE id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setString(1, r.getNume());
             ps.setInt(2, r.getAdresa());

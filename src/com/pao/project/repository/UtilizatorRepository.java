@@ -76,12 +76,14 @@ public class UtilizatorRepository implements Repository<Utilizator, Integer> {
 
     @Override
     public void update(Utilizator r) throws SQLException {
-        String sql = "UPDATE utilizator SET telefon = ?, email = ?, varsta = ? WHERE id = ?";
+        String sql = "UPDATE utilizator SET data_nasterii = ?, telefon = ?, email = ?, varsta = ?, nume = ? WHERE id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
-            ps.setString(1, r.getTelefon());
-            ps.setString(2, r.getEmail());
-            ps.setInt(3, r.getVarsta());
-            ps.setInt(4, r.getId());
+            ps.setString(1, r.getData_nasterii());
+            ps.setString(2, r.getTelefon());
+            ps.setString(3, r.getEmail());
+            ps.setInt(4, r.getVarsta());
+            ps.setString(5, r.getNume());
+            ps.setInt(6, r.getId());
             ps.executeUpdate();
         } catch (IOException e) {
             throw new SQLException(e);

@@ -24,6 +24,74 @@ public class SQLService {
         return DatabaseConnection.getInstance().getConnection();
     }
 
+
+    /*
+    Tranzactie:
+    marcam o comanda anulata de catre client
+     */
+    public void tranzactie(int comanda_id) throws SQLException, IOException {
+        Connection connection = getConn();
+        connection.setAutoCommit(false);
+        try{
+            int livrator_id;
+            String sql1 = """
+                    SELECT id, client_id, restaurant_id, livrator_id, pret_total, status 
+                    FROM comanda 
+                    WHERE id = ?
+                    """;
+            try (PreparedStatement ps = connection.prepareStatement(sql1)) {
+                ps.setInt(1, comanda_id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) {
+                        throw new SQLException("Comanda cu id " + comanda_id + " nu exista.");
+                    }
+                    livrator_id = rs.getInt("livrator_id");
+                }
+            }
+            // continuam inseamna ca a fost gasita comanda
+
+            // ne asiguram ca si livratorul exista
+            String sql2 = """
+                    SELECT id
+                    FROM utilizator
+                    WHERE id = ?
+                    """;
+            try (PreparedStatement ps = connection.prepareStatement(sql2)) {
+                ps.setInt(1, livrator_id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) {
+                        throw new SQLException("Livratorul cu id " + livrator_id + " nu exista.");
+                    }
+                }
+            }
+            // update la statusul comenzii o marcam anulata
+            String sql3 = """
+                    UPDATE comanda SET status = "ANULATA" 
+                    WHERE id = ?
+                    """;
+            try (PreparedStatement ps = connection.prepareStatement(sql3)) {
+                ps.setInt(1, comanda_id);
+                ps.executeUpdate();
+            }
+
+            // update la livrator il marcam disponibil sa preia o comanda noua
+            String sql4 = """
+                    UPDATE livrator SET este_dispnibil = 1 WHERE id = ?
+                    """;
+            try (PreparedStatement ps = connection.prepareStatement(sql4)) {
+                ps.setInt(1, livrator_id);
+                ps.executeUpdate();
+            }
+            connection.commit();
+            System.out.println("Comanda cu id-ul" + comanda_id + " a fost anulata.");
+        } catch (SQLException e){
+            connection.rollback();
+            throw e;
+        }
+        finally {
+            connection.setAutoCommit(true);
+        }
+    }
     /*
     Interogarea 1 sa se returneze clientii de peste 17 ani care au comandat cel putin un produs de la Restauruntul
     cu adresa_id = 1;
