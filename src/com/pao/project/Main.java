@@ -168,15 +168,13 @@ public class Main {
         audit.log("actualizeaza_restaurant");
 
         // Actiunea 13 -> Sterge un restaurant
-        System.out.println("13.");
+        System.out.println("13. Se sterge restaurantul cu id " + r1.getId());
         rr.delete(r1.getId());
         rr.findById(r1.getId()).ifPresentOrElse(
                 r -> System.out.println(r),
                 () -> System.out.println("NU A FOST GASIT")
         );
-
         audit.log("remove_restaurant");
-        System.out.println("A fost sters restaurantul cu id " + r1.getId());
 
         DatabaseConnection.getInstance().close();
     }
