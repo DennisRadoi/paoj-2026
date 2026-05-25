@@ -159,8 +159,14 @@ public class Main {
         audit.log("find_livrator_by_id");
 
         // Actiunea 12 -> Actualizeaza restaurant
+        rr.findById(r1.getId()).ifPresentOrElse(
+                r -> System.out.println("12. Inainte de update " + r),
+                () -> System.out.println("NU A FOST GASIT")
+        );
+
         rr.update2(r1, "Pasta Trapezului", adr6.getId());
-        System.out.println("12. Restaurantul cu id " + r1.getId() + " a fost actualizat");
+        System.out.println("Restaurantul cu id " + r1.getId() + " a fost actualizat");
+
         rr.findById(r1.getId()).ifPresentOrElse(
                 r -> System.out.println("Dupa update " + r),
                 () -> System.out.println("NU A FOST GASIT")
