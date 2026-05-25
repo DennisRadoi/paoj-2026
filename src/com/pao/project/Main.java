@@ -119,6 +119,7 @@ public class Main {
         // Actiunea 6 -> Tranzactia
         System.out.println("6. ");
         ss.tranzactie(com4.getId());
+        cr.findById(com4.getId()).ifPresent(c -> System.out.println(c));
         audit.log("anuleaza_comanda");
 
         // Actiunea 7 -> Q1
@@ -160,12 +161,22 @@ public class Main {
         // Actiunea 12 -> Actualizeaza restaurant
         rr.update2(r1, "Pasta Trapezului", adr6.getId());
         System.out.println("12. Restaurantul cu id " + r1.getId() + " a fost actualizat");
+        rr.findById(r1.getId()).ifPresentOrElse(
+                r -> System.out.println("Dupa update " + r),
+                () -> System.out.println("NU A FOST GASIT")
+        );
         audit.log("actualizeaza_restaurant");
 
         // Actiunea 13 -> Sterge un restaurant
+        System.out.println("13.");
         rr.delete(r1.getId());
+        rr.findById(r1.getId()).ifPresentOrElse(
+                r -> System.out.println(r),
+                () -> System.out.println("NU A FOST GASIT")
+        );
+
         audit.log("remove_restaurant");
-        System.out.println("13. A fost sters restaurantul cu id " + r1.getId());
+        System.out.println("A fost sters restaurantul cu id " + r1.getId());
 
         DatabaseConnection.getInstance().close();
     }
