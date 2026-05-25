@@ -26,7 +26,7 @@ public class Client extends Utilizator {
 
     @Override
     public String toString() {
-        return "Clientul " + id + " pe nume " + nume + " cu adresa de livrare: " + adresa;
+        return "Clientul " + id + " pe nume " + nume + " cu adresa cu id " + adresa_id;
     }
 
     public ArrayList<CardBancar> getListaCarduri() {

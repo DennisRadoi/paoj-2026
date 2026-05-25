@@ -19,18 +19,18 @@ public class ComandaProdusRepository implements Repository<ComandaProdus, Intege
         ComandaProdus cp = new ComandaProdus();
         cp.setId(rs.getInt("id"));
         cp.setComanda_id(rs.getInt("comanda_id"));
-        cp.setProdus_cod(rs.getString("produs_cod"));
+        cp.setProdus_id(rs.getInt("produs_id"));
         return cp;
 
     }
 
     @Override
     public void save(ComandaProdus cp) throws SQLException {
-        String sql = "INSERT INTO comanda_produs (comanda_id, produs_cod) VALUES (?, ?)";
+        String sql = "INSERT INTO comanda_produs (comanda_id, produs_id) VALUES (?, ?)";
         try (PreparedStatement ps = getConnection().prepareStatement(sql,
                 Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, cp.getComanda_id());
-            ps.setString(2, cp.getProdus_cod());
+            ps.setInt(2, cp.getProdus_id());
             ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) {
@@ -44,7 +44,7 @@ public class ComandaProdusRepository implements Repository<ComandaProdus, Intege
 
     @Override
     public Optional<ComandaProdus> findById(Integer id) throws SQLException {
-        String sql = "SELECT id, comanda_id, produs_cod FROM comanda_produs WHERE id = ?";
+        String sql = "SELECT id, comanda_id, produs_id FROM comanda_produs WHERE id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -58,7 +58,7 @@ public class ComandaProdusRepository implements Repository<ComandaProdus, Intege
 
     @Override
     public List<ComandaProdus> findAll() throws SQLException {
-        String sql = "SELECT id, comanda_id, produs_cod FROM comanda_produs ORDER BY id";
+        String sql = "SELECT id, comanda_id, produs_id FROM comanda_produs ORDER BY id";
         List<ComandaProdus> list = new ArrayList<>();
         try (PreparedStatement ps = getConnection().prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -70,10 +70,10 @@ public class ComandaProdusRepository implements Repository<ComandaProdus, Intege
     }
 
     public void update(ComandaProdus cp) throws SQLException {
-        String sql = "UPDATE comanda_produs SET comanda_id = ?, produs_cod = ? WHERE id = ?";
+        String sql = "UPDATE comanda_produs SET comanda_id = ?, produs_id = ? WHERE id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setInt(1, cp.getComanda_id());
-            ps.setString(2, cp.getProdus_cod());
+            ps.setInt(2, cp.getProdus_id());
             ps.setInt(3, cp.getId());
             ps.executeUpdate();
         } catch (IOException e) {

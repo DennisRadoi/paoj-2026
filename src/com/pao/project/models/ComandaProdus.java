@@ -3,11 +3,11 @@ package com.pao.project.models;
 public class ComandaProdus {
     private int id;
     private int comanda_id;
-    private String produs_cod;
+    private int produs_id;
     public ComandaProdus() {}
-    public ComandaProdus(int comanda_id, String produs_cod) {
+    public ComandaProdus(int comanda_id, int produs_id) {
         this.comanda_id = comanda_id;
-        this.produs_cod = produs_cod;
+        this.produs_id = produs_id;
     }
 
     public int getId() {
@@ -26,11 +26,11 @@ public class ComandaProdus {
         this.comanda_id = comanda_id;
     }
 
-    public String getProdus_cod() {
-        return produs_cod;
+    public int getProdus_id() {
+        return produs_id;
     }
 
-    public void setProdus_cod(String produs_cod) {
-        this.produs_cod = produs_cod;
+    public void setProdus_id(int produs_cod) {
+        this.produs_id = produs_cod;
     }
 }

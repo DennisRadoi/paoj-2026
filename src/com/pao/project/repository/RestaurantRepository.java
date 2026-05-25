@@ -81,6 +81,18 @@ public class RestaurantRepository implements Repository<Restaurant, Integer> {
         }
     }
 
+    public void update2(Restaurant r1, String nume, int adresa_id) throws SQLException {
+        String sql = "UPDATE restaurant SET nume = ?, adresa_id = ? WHERE id = ?";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setString(1, nume);
+            ps.setInt(2, adresa_id);
+            ps.setInt(3, r1.getId());
+            ps.executeUpdate();
+        } catch (IOException e) {
+            throw new SQLException(e);
+        }
+    }
+
     @Override
     public void delete(Integer id) throws SQLException {
         String sql = "DELETE FROM restaurant WHERE id = ?";

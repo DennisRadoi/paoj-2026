@@ -100,12 +100,10 @@ public class Comanda{
         return total;
     }
 
-//    public String toString() {
-//        String numeLivrator = (livrator != null) ? livrator.getNume() : "Neasignat";
-//        return "Comanda #" + id + " | Status: " + status +
-//                " | Client: " + client.getNume() + " | Restaurant: " + restaurant_id.getNume() +
-//                " | Livrator: " + numeLivrator + " | Total: " + pretTotal + " RON (" + produse.size() + " produse)";
-//    }
+    public String toString() {
+        return "Comanda #" + id + " | Status: " + status +
+                 " | Total: " + pretTotal + " RON";
+    }
 
     public void citeste(Scanner in) {
 //        System.out.print("Pret total comanda: ");

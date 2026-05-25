@@ -86,7 +86,13 @@ public class ClientRepository implements Repository<Client, Integer> {
 
     @Override
     public Optional<Client> findById(Integer id) throws SQLException {
-        String sql = "SELECT id, adresa_id FROM client WHERE id = ?";
+        String sql = """
+            SELECT u.id, u.data_nasterii, u.telefon, u.email, u.varsta, u.nume,
+                   c.adresa_id,
+            FROM client c
+            JOIN utilizator u ON c.id = u.id
+            WHERE u.id = ?
+            """;
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -100,7 +106,13 @@ public class ClientRepository implements Repository<Client, Integer> {
 
     @Override
     public List<Client> findAll() throws SQLException {
-        String sql = "SELECT id, adresa_id FROM client ORDER BY id";
+        String sql = """
+            SELECT u.id, u.data_nasterii, u.telefon, u.email, u.varsta, u.nume,
+                   c.adresa_id
+            FROM livrator l
+            JOIN utilizator u ON l.id = u.id
+            ORDER BY u.id
+            """;
         List<Client> list = new ArrayList<>();
         try (PreparedStatement ps = getConnection().prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {

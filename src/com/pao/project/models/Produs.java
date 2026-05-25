@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Produs implements Comparable<Produs> {
-    protected String cod;
+    protected int id;
     protected String nume;
     protected String descriere;
     protected double pret;
@@ -13,7 +13,7 @@ public class Produs implements Comparable<Produs> {
 
     public Produs() {}
     public Produs(String cod, String nume, String descriere, double pret) {
-        this.cod = cod;
+//        this.cod = cod;
         this.nume = nume;
         this.descriere = descriere;
         this.pret = pret;
@@ -26,6 +26,11 @@ public class Produs implements Comparable<Produs> {
         this.restaurant_id = restaurant_id;
     }
 
+    @Override
+    public String toString() {
+        return "Produsul " + nume + " costa " + pret + " RON";
+    }
+
     public int getRestaurant() {
         return restaurant_id;
     }
@@ -34,12 +39,12 @@ public class Produs implements Comparable<Produs> {
         this.restaurant_id = restaurant_id;
     }
 
-    public String getId() {
-        return cod;
+    public int getId() {
+        return id;
     }
 
-    public void setId(String cod) {
-        this.cod = cod;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNume() {
@@ -66,11 +71,11 @@ public class Produs implements Comparable<Produs> {
         this.pret = pret;
     }
 
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Produs produs = (Produs) o;
-        return cod.equals(produs.cod);
-    }
+//    public boolean equals(Object o) {
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Produs produs = (Produs) o;
+//        return cod.equals(produs.cod);
+//    }
 //    public abstract String getTip();
 
     public int hashCode() {

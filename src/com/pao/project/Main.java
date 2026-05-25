@@ -5,6 +5,7 @@ import com.pao.project.services.*;
 import com.pao.project.repository.*;
 import com.pao.project.util.DatabaseConnection;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -17,61 +18,132 @@ public class Main {
     static LivratorRepository lr = new LivratorRepository();
     static RestaurantRepository rr = new RestaurantRepository();
     static AdresaRepository adr = new AdresaRepository();
+    static ComandaProdusRepository cpr = new ComandaProdusRepository();
     static SQLService ss = SQLService.getInstance();
 
-    public static void main(String[] args) throws SQLException {
-        incarcaDate();
-        Adresa a1 = new Adresa("Calarasi", "Calarasi", "Zefirului", 26, "I19", 2, 22);
-        Adresa a2 = new Adresa("Bucuresti", "Sector 6", "Precizei", 24, "B2", 1, 985);
-        adr.save(a1);
-        adr.save(a2);
+    public static void main(String[] args) throws SQLException, IOException {
+        Adresa adr1 = new Adresa("Calarasi", "Calarasi", "Zefirului", 26, "I19", 2, 22);
+        Adresa adr2 = new Adresa("Bucuresti", "Sector 6", "Precizei", 24, "B2", 1, 985);
+        Adresa adr3 = new Adresa("Bucuresti", "Sector 1", "Calea Victoriei", 10, "A", 1, 2);
+        Adresa adr4 = new Adresa("Bucuresti", "Sector 3", "Bulevardul Unirii", 25, "B", 2, 14);
+        Adresa adr5 = new Adresa("Bucuresti", "Sector 6", "Preciziei", 24, "B2", 1, 985);
+        Adresa adr6 = new Adresa("Ilfov", "Voluntari", "Eroilor", 5, "", 0, 0);
+        adr.save(adr1);
+        adr.save(adr2);
+        adr.save(adr3);
+        adr.save(adr4);
+        adr.save(adr5);
+        adr.save(adr6);
+
+        Restaurant r1 = new Restaurant("Pizzeria Galleto", adr3.getId());
+        Restaurant r2 = new Restaurant("Sushi Zen", adr4.getId());
+//        Restaurant r3 = new Restaurant("Pasta Trapezului", adr6.getId());
+
+        rr.save(r1);
+        rr.save(r2);
+//        rr.save(r3);
+
+        Produs p1 = new Produs("Pizza Margherita", "Blat, sos de rosii, mozzarella", 32.50, r1.getId());
+        Produs p2 = new Produs("Paste Carbonara", "Paste, ou, pancetta, parmezan", 38.00, r1.getId());
+        Produs p3 = new Produs("Cola 500ml", "Bautura carbogazoasa", 8.50, r1.getId());
+        Produs p4 = new Produs("Sushi Set", "12 piese sushi", 55.00, r2.getId());
+
+        pr.save(p1);
+        pr.save(p2);
+        pr.save(p3);
+        pr.save(p4);
+
+        Client c1 = new Client("2001-04-21", "0788999000", "andrei@example.com", 25, "Andrei Alex", adr5.getId());
+        Client c2 = new Client("1999-11-02", "0722000000", "maria@example.com", 27, "Maria Popescu", adr6.getId());
+
+        clr.save(c1);
+        clr.save(c2);
+
+        Livrator l1 = new Livrator("2005-03-26", "0734565780", "abdul@example.com", 21, "Abdul Abdul", "Bicicleta", 0);
+        Livrator l2 = new Livrator("1998-07-10", "0711000000", "ion@example.com", 28, "Ion Ionescu", "Scuter", 1);
+
+        lr.save(l1);
+        lr.save(l2);
+
+        Comanda com1 = new Comanda(c1.getId(), r1.getId(), l1.getId(), 41.00, "LIVRATA");
+        Comanda com2 = new Comanda(c1.getId(), r1.getId(), l2.getId(), 70.50, "LIVRATA");
+        Comanda com3 = new Comanda(c2.getId(), r2.getId(), l2.getId(), 55.00, "LIVRATA");
+        Comanda com4 = new Comanda(c2.getId(), r1.getId(), l1.getId(), 32.50, "IN_LIVRARE");
+
+        cr.save(com1);
+        cr.save(com2);
+        cr.save(com3);
+        cr.save(com4);
+
+        cpr.save(new ComandaProdus(com1.getId(), p1.getId()));
+        cpr.save(new ComandaProdus(com2.getId(), p1.getId()));
+        cpr.save(new ComandaProdus(com2.getId(), p2.getId()));
+        cpr.save(new ComandaProdus(com3.getId(), p4.getId()));
+        cpr.save(new ComandaProdus(com4.getId(), p1.getId()));
+
+
         System.out.println("ETAPA 2 PROIECT\n");
 
         // Actiunea 1 -> ADAUGA Restaurant
-        Restaurant r1 = new Restaurant("Pizzeria galleto", a1.getId());
-        rr.save(r1);
+        Restaurant r3 = new Restaurant("Pizzeria ROYAL FOODS", adr1.getId());
+        rr.save(r3);
         audit.log("add_resaurant");
-        System.out.println("1. Restaurant adaugat " + r1);
+        System.out.println("1. Restaurant adaugat " + r3);
 
         // Actiunea 2 -> ADAUGA produs
-        Produs p1 = new Produs("Pizza", "Blat cu sos", 30, r1.getId());
-        pr.save(p1);
+        Produs p5 = new Produs("Pizza", "Blat cu sos", 30, r1.getId());
+        pr.save(p5);
         audit.log("add_produs");
-        System.out.println("2. Produs adaugat " + p1);
+        System.out.println("2. Produs adaugat " + p5);
 
         // Actiunea 3 -> Adauga client
-        Client c1 = new Client("21-04-2001", "0788999000", "miau@gmail.com", 25, "Andrei Alex", a2.getId());
-        clr.save(c1);
+        Client c3 = new Client("21-04-2001", "0788999000", "miau@gmail.com", 25, "Andrei Alex", adr2.getId());
+        clr.save(c3);
         audit.log("add_client");
-        System.out.println("3. Client adaugat " + c1);
+        System.out.println("3. Client adaugat " + c3);
 
         // Actiunea 4 -> Adauga livrator
-        Livrator l1 = new Livrator("26-03-2005", "0734565780", "abdul@gmail.com", 21, "Abdul Abdul" ,"Bicicleta", 1);
-        lr.save(l1);
+        Livrator l3 = new Livrator("26-03-2005", "0734565780", "abdul@gmail.com", 21, "Abdul Abdul" ,"Bicicleta", 0);
+        lr.save(l3);
         audit.log("add_livrator");
-        System.out.println("4. Livrator adaugat " + l1);
+        System.out.println("4. Livrator adaugat " + l3);
 
         // Actiunea 5 -> Adauga comanda
-        Comanda com1 = new Comanda(c1.getId(), r1.getId(), l1.getId(), 60, "IN_LIVRARE");
-        cr.save(com1);
+        Comanda com5 = new Comanda(c1.getId(), r1.getId(), l1.getId(), 60, "IN_LIVRARE");
+        cr.save(com5);
         audit.log("add_comanda");
-        System.out.println("5. Comanda adaugat " + com1);
+        System.out.println("5. Comanda adaugat " + com5);
 
-        ComandaProdus cp1 = new ComandaProdus(com1.getId(), p1.getId());
-        // Actiunea 5 -> Tranzactia
+        cpr.save(new ComandaProdus(com5.getId(), p3.getId()));
 
-        // Actiunea 6 -> Q1
+        // Actiunea 6 -> Tranzactia
+        System.out.println("6. ");
+        ss.tranzactie(com4.getId());
+        audit.log("anuleaza_comanda");
 
-        // Actiunea 7 -> Q2
+        // Actiunea 7 -> Q1
+        System.out.println("7. Q1");
+        for (String s : ss.Clienti_majori()) {
+            System.out.println(s);
+        }
+        audit.log("clienti_majori");
 
-        // Actiunea 8 -> Q3
+        // Actiunea 8 -> Q2
+        System.out.println("8. Q2");
+        for (String s : ss.Cele_mai_comandate_produse()) {
+            System.out.println(s);
+        }
+        audit.log("cele_mai_comandate_produse");
 
-        // Actiunea 9 -> Sterge un restaurant
-        rr.delete(r1.getId());
-        audit.log("remove_restaurant");
-        System.out.println("A fost sters restaurantul cu id" + r1.getId());
+        // Actiunea 9 -> Q3
+        System.out.println("9. Q3");
+        for (String s : ss.Clienti_recurenti()) {
+            System.out.println(s);
+        }
+        audit.log("clienti_recurenti");
 
         // Actiunea 10 -> Listeaza toate comenzile
+        System.out.println("10.");
         List<Comanda> comenzi = cr.findAll();
         audit.log("list_all_comenzi");
         for (Comanda c : comenzi) {
@@ -86,392 +158,16 @@ public class Main {
         audit.log("find_livrator_by_id");
 
         // Actiunea 12 -> Actualizeaza restaurant
+        rr.update2(r1, "Pasta Trapezului", adr6.getId());
+        System.out.println("12. Restaurantul cu id " + r1.getId() + " a fost actualizat");
+        audit.log("actualizeaza_restaurant");
 
+        // Actiunea 13 -> Sterge un restaurant
+        rr.delete(r1.getId());
+        audit.log("remove_restaurant");
+        System.out.println("13. A fost sters restaurantul cu id " + r1.getId());
 
+        DatabaseConnection.getInstance().close();
     }
 
-    private static void incarcaDate() throws SQLException {
-
-    }
-
-//    private static void afiseazaMeniu(){
-//        System.out.println("\n--- MENIU FOOD DELIVERY ---");
-//        System.out.println("1. Adauga un produs la comanda");
-//        System.out.println("2. Inregistreaza un utilizator nou");
-//        System.out.println("3. Afiseaza clientul cu cele mai multe comenzi");
-//        System.out.println("4. Returneaza o comanda");
-//        System.out.println("5. Afiseaza si sorteaza produsele de tip mancare ale unui restaurant dupa numarul de calorii");
-//        System.out.println("6. Afiseaza comenzile aflate in livrare");
-//        System.out.println("7. Afiseaza cel mai comandat produs din toate restaurantele");
-//        System.out.println("8. Afiseaza topul restaurantelor (media notelor >= 5)");
-//        System.out.println("9. Afiseaza clientii cu cel putin 2 carduri bancare");
-//        System.out.println("10. Afiseaza comenzile livrate de un livrator (sortate descrescator dupa pret)");
-//        System.out.println("11. Inregistreaza un restaurant nou");
-//        System.out.println("12. Inregistreaza un produs nou");
-//        System.out.println("13. Inregistreaza o comanda noua");
-//        System.out.println("14. Sterge un utilizator");
-//        System.out.println("15. Sterge un restaurant");
-//        System.out.println("16. Sterge o comanda");
-//        System.out.println("17. Afiseaza toti utilizatorii");
-//        System.out.println("18. Afiseaza toate restaurantele");
-//        System.out.println("19. Afiseaza toate produsele");
-//        System.out.println("20. Afiseaza toate comenzile");
-//        System.out.println("0. Iesire");
-//        System.out.print("Alege o optiune: ");
-//    }
-//
-//    private static void afisAllUtilizatori(){
-//        UTILIZATOR_SERVICE.listAllUtilizatori();
-//    }
-//
-//    private static void afisAllRestaurante(){
-//        for(Restaurant r : RESTAURANT_SERVICE.getAllRestaurante()){
-//            System.out.println(r);
-//        }
-//    }
-//
-//    private static void afisAllProduse(){
-//        for(Restaurant r : RESTAURANT_SERVICE.getAllRestaurante()){
-//            for(Produs p : r.getMeniu()){
-//                System.out.println(p);
-//            }
-//        }
-//    }
-//
-//    private static void afisAllComenzi(){
-//        COMANDA_SERVICE.listAllComenzi();
-//    }
-//
-//    private static void adaugaProdusLaComanda(){
-//        System.out.print("ID comanda: ");
-//        int idComanda = Integer.parseInt(SCANNER.nextLine().trim());
-//        Comanda comanda = COMANDA_SERVICE.getComandaById(idComanda);
-//        if(comanda == null){
-//            System.out.println("Comanda nu exista.");
-//            return;
-//        }
-//
-//        Restaurant restaurant = comanda.getRestaurant();
-//        if(restaurant == null || restaurant.getMeniu().isEmpty()){
-//            System.out.println("Comanda nu are restaurant asociat sau meniul restaurantului este gol.");
-//            return;
-//        }
-//
-//        System.out.println("Produse disponibile pentru comanda #" + idComanda + ":");
-//        for(int i = 0; i < restaurant.getMeniu().size(); i++){
-//            Produs produsMeniu = restaurant.getMeniu().get(i);
-//            System.out.println((i + 1) + ". " + produsMeniu.getNume() + " [" + produsMeniu.getTip() + "] - " + produsMeniu.getPret() + " RON");
-//        }
-//
-//        System.out.print("Alege index produs: ");
-//        int indexProdus = Integer.parseInt(SCANNER.nextLine().trim()) - 1;
-//        if(indexProdus < 0 || indexProdus >= restaurant.getMeniu().size()){
-//            System.out.println("Index produs invalid.");
-//            return;
-//        }
-//
-//        Produs produsSelectat = restaurant.getMeniu().get(indexProdus);
-//        COMANDA_SERVICE.adaugaProdusLaComanda(idComanda, produsSelectat);
-//        System.out.println("Produs adaugat cu succes. Total actualizat: " + comanda.getPretTotal() + " RON.");
-//    }
-//
-//    private static void inregistreazaUtilizatorNou(){
-//        System.out.print("Tip utilizator (1 - Client, 2 - Livrator): ");
-//        String tip = SCANNER.nextLine().trim();
-//        System.out.print("ID: ");
-//        int id = Integer.parseInt(SCANNER.nextLine().trim());
-//
-//        if("1".equals(tip)){
-//            Client client = new Client(
-//                    id,
-//                    "",
-//                    "",
-//                    "",
-//                    0,
-//                    "",
-//                    new Adresa()
-//            );
-//            client.citeste(SCANNER);
-//            System.out.print("Numar carduri de adaugat initial: ");
-//            int nrCarduri = Integer.parseInt(SCANNER.nextLine().trim());
-//            for (int i = 0; i < nrCarduri; i++){
-//                client.adaugaCard(citesteCard());
-//            }
-//            UTILIZATOR_SERVICE.addUtilizator(client);
-//            System.out.println("Client inregistrat cu succes.");
-//        } else if("2".equals(tip)){
-//            Livrator livrator = new Livrator(id, "", "", "", 0, "", "", false, 0);
-//            livrator.citeste(SCANNER);
-//            UTILIZATOR_SERVICE.addUtilizator(livrator);
-//            System.out.println("Livrator inregistrat cu succes.");
-//        } else{
-//            System.out.println("Tip utilizator invalid.");
-//        }
-//    }
-//
-//    private static void afiseazaClientCuCeleMaiMulteComenzi(){
-//        Map<Client, Integer> rezultat = UTILIZATOR_SERVICE.getClientCuMaxComenzi(COMANDA_SERVICE.getAllComenzi());
-//        if(rezultat.isEmpty()){
-//            System.out.println("Nu exista clienti/comenzi inregistrate.");
-//            return;
-//        }
-//        for(Map.Entry<Client, Integer> entry : rezultat.entrySet()){
-//            System.out.println("Clientul cu cele mai multe comenzi: " + entry.getKey() + " | nr. comenzi: " + entry.getValue());
-//        }
-//    }
-//
-//    private static void returneazaComanda(){
-//        System.out.print("ID comanda de returnat: ");
-//        int idComanda = Integer.parseInt(SCANNER.nextLine().trim());
-//        Comanda comanda = COMANDA_SERVICE.getComandaById(idComanda);
-//        if(comanda == null){
-//            System.out.println("Comanda nu exista.");
-//            return;
-//        }
-//        COMANDA_SERVICE.returneazaComanda(idComanda);
-//        System.out.println("Comanda #" + idComanda + " a fost marcata ca RETURNATA.");
-//    }
-//
-//    private static void afiseazaMancareSortataRestaurant(){
-//        System.out.print("Nume restaurant: ");
-//        String numeRestaurant = SCANNER.nextLine().trim();
-//        Restaurant restaurant = RESTAURANT_SERVICE.getRestaurantByNume(numeRestaurant);
-//        if(restaurant == null){
-//            System.out.println("Restaurantul nu exista.");
-//            return;
-//        }
-//        RESTAURANT_SERVICE.afisProduseSortateDupaCalorii(restaurant);
-//    }
-//
-//    private static void afiseazaComenziInLivrare(){
-//        ArrayList<Comanda> inLivrare = COMANDA_SERVICE.getComenziInLivrare();
-//        if(inLivrare.isEmpty()){
-//            System.out.println("Nu exista comenzi in livrare.");
-//            return;
-//        }
-//        for(Comanda comanda : inLivrare){
-//            System.out.println(comanda);
-//        }
-//    }
-//
-//    private static void afiseazaCelMaiComandatProdus(){
-//        Produs produs = COMANDA_SERVICE.getCelMaiComandatProdus();
-//        if(produs == null){
-//            System.out.println("Nu exista comenzi cu produse.");
-//            return;
-//        }
-//        System.out.println("Cel mai comandat produs este: " + produs.getNume() + " [" + produs.getTip() + "]");
-//    }
-//
-//    private static void afiseazaTopRestaurante(){
-//        RESTAURANT_SERVICE.afisTopRestauranteDupaRating();
-//    }
-//
-//    private static void afiseazaClientiCuMinimDouaCarduri(){
-//        ArrayList<Client> clienti = UTILIZATOR_SERVICE.getClientiCuMinimDouaCarduri();
-//        if(clienti.isEmpty()) {
-//            System.out.println("Nu exista clienti cu minim 2 carduri.");
-//            return;
-//        }
-//        for(Client client : clienti) {
-//            System.out.println(client + " | carduri: " + client.getListaCarduri().size());
-//        }
-//    }
-//
-//    private static void afiseazaComenziLivrateDeLivrator(){
-//        System.out.print("ID livrator: ");
-//        int idLivrator = Integer.parseInt(SCANNER.nextLine().trim());
-//        Livrator livrator = UTILIZATOR_SERVICE.getLivratorById(idLivrator);
-//        if(livrator == null){
-//            System.out.println("Livratorul nu exista.");
-//            return;
-//        }
-//        COMANDA_SERVICE.afisComenziLivratorFinalizate(livrator);
-//    }
-//
-//    private static void inregistreazaRestaurantNou(){
-//        System.out.print("ID restaurant: ");
-//        int idRestaurant = Integer.parseInt(SCANNER.nextLine().trim());
-//
-//        Restaurant restaurant = new Restaurant("", new Adresa(), idRestaurant, new java.util.HashMap<>());
-//        restaurant.citeste(SCANNER);
-//        System.out.println("Adresa restaurant:");
-//        restaurant.getAdresa().citeste(SCANNER);
-//
-//        RESTAURANT_SERVICE.addRestaurant(restaurant);
-//        System.out.println("Restaurant inregistrat cu succes.");
-//    }
-//
-//    private static void inregistreazaProdusNou(){
-//        System.out.print("Nume restaurant: ");
-//        String numeRestaurant = SCANNER.nextLine().trim();
-//        Restaurant restaurant = RESTAURANT_SERVICE.getRestaurantByNume(numeRestaurant);
-//
-//        if(restaurant == null){
-//            System.out.println("Restaurantul nu exista.");
-//            return;
-//        }
-//
-//        Produs produs = citesteProdus();
-//        restaurant.adaugaProdusMeniu(produs);
-//        System.out.println("Produs inregistrat cu succes in meniul restaurantului.");
-//    }
-//
-//    private static void inregistreazaComandaNoua(){
-//        System.out.print("ID comanda: ");
-//        int idComanda = Integer.parseInt(SCANNER.nextLine().trim());
-//        if(COMANDA_SERVICE.getComandaById(idComanda) != null){
-//            System.out.println("Exista deja o comanda cu acest ID.");
-//            return;
-//        }
-//
-//        System.out.print("ID client: ");
-//        int idClient = Integer.parseInt(SCANNER.nextLine().trim());
-//        Client client = UTILIZATOR_SERVICE.getClientById(idClient);
-//        if (client == null){
-//            System.out.println("Clientul nu exista.");
-//            return;
-//        }
-//
-//        System.out.print("Nume restaurant: ");
-//        String numeRestaurant = SCANNER.nextLine().trim();
-//        Restaurant restaurant = RESTAURANT_SERVICE.getRestaurantByNume(numeRestaurant);
-//        if(restaurant == null){
-//            System.out.println("Restaurantul nu exista.");
-//            return;
-//        }
-//
-//        System.out.print("ID livrator (gol daca nu e asignat): ");
-//        String idLivratorText = SCANNER.nextLine().trim();
-//        Livrator livrator = null;
-//        if(!idLivratorText.isEmpty()){
-//            livrator = UTILIZATOR_SERVICE.getLivratorById(Integer.parseInt(idLivratorText));
-//            if (livrator == null) {
-//                System.out.println("Livratorul nu exista.");
-//                return;
-//            }
-//        }
-//
-//        System.out.print("Numar produse in comanda: ");
-//        int nrProduse = Integer.parseInt(SCANNER.nextLine().trim());
-//        ArrayList<Produs> produse = new ArrayList<>();
-//        if(restaurant.getMeniu().isEmpty()){
-//            System.out.println("Restaurantul nu are produse in meniu.");
-//            return;
-//        }
-//
-//        System.out.println("Produse disponibile in meniul restaurantului:");
-//        for(int i = 0; i < restaurant.getMeniu().size(); i++){
-//            Produs produsMeniu = restaurant.getMeniu().get(i);
-//            System.out.println((i + 1) + ". " + produsMeniu.getNume() + " [" + produsMeniu.getTip() + "] - " + produsMeniu.getPret() + " RON");
-//        }
-//
-//        for(int i = 0; i < nrProduse; i++){
-//            System.out.print("Alege index produs pentru pozitia " + (i + 1) + ": ");
-//            int indexProdus = Integer.parseInt(SCANNER.nextLine().trim()) - 1;
-//            if(indexProdus < 0 || indexProdus >= restaurant.getMeniu().size()){
-//                System.out.println("Index produs invalid.");
-//                return;
-//            }
-//            produse.add(restaurant.getMeniu().get(indexProdus));
-//        }
-//
-//        Comanda comanda = new Comanda(
-//                idComanda,
-//                client,
-//                restaurant,
-//                livrator,
-//                produse,
-//                StatusComanda.INITIALIZATA
-//        );
-//        COMANDA_SERVICE.addComanda(comanda);
-//        System.out.println("Comanda inregistrata cu succes. Total: " + comanda.getPretTotal() + " RON.");
-//    }
-//
-//    private static void stergeUtilizator(){
-//        System.out.print("ID utilizator: ");
-//        int idUtilizator = Integer.parseInt(SCANNER.nextLine().trim());
-//
-//        Utilizator utilizatorGasit = null;
-//        for(Utilizator utilizator : UTILIZATOR_SERVICE.getAllUtilizatori()){
-//            if(utilizator.getId() == idUtilizator){
-//                utilizatorGasit = utilizator;
-//                break;
-//            }
-//        }
-//
-//        if(utilizatorGasit == null){
-//            System.out.println("Utilizatorul nu exista.");
-//            return;
-//        }
-//
-//        UTILIZATOR_SERVICE.stergeUtilizator(utilizatorGasit);
-//        System.out.println("Utilizator sters cu succes.");
-//    }
-//
-//    private static void stergeRestaurant(){
-//        System.out.print("Nume restaurant: ");
-//        String numeRestaurant = SCANNER.nextLine().trim();
-//        Restaurant restaurant = RESTAURANT_SERVICE.getRestaurantByNume(numeRestaurant);
-//
-//        if(restaurant == null){
-//            System.out.println("Restaurantul nu exista.");
-//            return;
-//        }
-//
-//        RESTAURANT_SERVICE.stergeRestaurant(restaurant);
-//        System.out.println("Restaurant sters cu succes.");
-//    }
-//
-//    private static void stergeComanda(){
-//        System.out.print("ID comanda: ");
-//        int idComanda = Integer.parseInt(SCANNER.nextLine().trim());
-//        Comanda comanda = COMANDA_SERVICE.getComandaById(idComanda);
-//
-//        if(comanda == null){
-//            System.out.println("Comanda nu exista.");
-//            return;
-//        }
-//
-//        COMANDA_SERVICE.stergeComanda(comanda);
-//        System.out.println("Comanda stearsa cu succes.");
-//    }
-//
-//    private static CardBancar citesteCard(){
-//        System.out.print("ID card: ");
-//        int idCard = Integer.parseInt(SCANNER.nextLine().trim());
-//        CardBancar card = new CardBancar(idCard, "", "", "", 1, 2000);
-//        card.citeste(SCANNER);
-//        return card;
-//    }
-//
-//    private static Produs citesteProdus(){
-//        System.out.print("Tip produs (1 - Mancare, 2 - Desert, 3 - Bautura): ");
-//        String tip = SCANNER.nextLine().trim();
-//        System.out.print("Cod produs: ");
-//        CodProdus cod = new CodProdus(SCANNER.nextLine().trim());
-//        if("1".equals(tip)){
-//            Mancare mancare = new Mancare(cod, "", "", 0.0, 0, false, false, 0, 0);
-//            mancare.citeste(SCANNER);
-//            return mancare;
-//        }
-//
-//        if("2".equals(tip)){
-//            Desert desert = new Desert(cod, "", "", 0.0, 0, false, false, false, false);
-//            desert.citeste(SCANNER);
-//            return desert;
-//        }
-//
-//        if("3".equals(tip)){
-//            Bautura bautura = new Bautura(cod, "", "", 0.0, 0, false, false, 0.0, false);
-//            bautura.citeste(SCANNER);
-//            return bautura;
-//        }
-//
-//        throw new IllegalArgumentException("Tip de produs invalid.");
-//    }
-
-    private static void incarcaDatePredefinite(){
-//
-    }
 }

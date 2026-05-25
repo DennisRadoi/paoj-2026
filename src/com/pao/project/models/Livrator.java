@@ -47,8 +47,14 @@ public class Livrator extends Utilizator {
 
     @Override
     public String toString() {
-        return "Livratorul " + id + " pe nume " + nume + " conduce un vehicul de tip " + vehicul + ", a efecutat " + nrComenzi +
-                " comenzi ";
+        String mesaj = "";
+        if(esteDisponibil == 0) {
+            mesaj = "Livratorul " + id + " pe nume " + nume + " conduce un vehicul de tip " + vehicul + " si momentan nu este disponibil";
+        }
+        else if(esteDisponibil == 1) {
+             mesaj = "Livratorul " + id + " pe nume " + nume + " conduce un vehicul de tip " + vehicul + " si momentan este disponibil";
+        }
+        return mesaj;
     }
 
     public void citeste(Scanner in) {

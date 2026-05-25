@@ -24,7 +24,7 @@ public class LivratorRepository implements Repository<Livrator, Integer> {
         r.setVarsta(rs.getInt("varsta"));
         r.setNume(rs.getString("nume"));
         r.setVehicul(rs.getString("vehicul"));
-        r.setEsteDisponibil(rs.getInt("esteDisponibil"));
+        r.setEsteDisponibil(rs.getInt("este_disponibil"));
         return r;
     }
 
@@ -88,7 +88,13 @@ public class LivratorRepository implements Repository<Livrator, Integer> {
 
     @Override
     public Optional<Livrator> findById(Integer id) throws SQLException {
-        String sql = "SELECT id, vehicul, este_disponibil FROM livrator WHERE id = ?";
+        String sql = """
+            SELECT u.id, u.data_nasterii, u.telefon, u.email, u.varsta, u.nume,
+                   l.vehicul, l.este_disponibil
+            FROM livrator l
+            JOIN utilizator u ON l.id = u.id
+            WHERE l.id = ?
+            """;
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -102,7 +108,13 @@ public class LivratorRepository implements Repository<Livrator, Integer> {
 
     @Override
     public List<Livrator> findAll() throws SQLException {
-        String sql = "SELECT id, vehicul, este_disponibil FROM livrator ORDER BY id";
+        String sql = """
+            SELECT u.id, u.data_nasterii, u.telefon, u.email, u.varsta, u.nume,
+                   l.vehicul, l.este_disponibil
+            FROM livrator l
+            JOIN utilizator u ON l.id = u.id
+            ORDER BY u.id
+            """;
         List<Livrator> list = new ArrayList<>();
         try (PreparedStatement ps = getConnection().prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {

@@ -66,7 +66,7 @@ CREATE TABLE restaurant_nota (
 
 
 CREATE TABLE produs (
-    cod             TEXT    PRIMARY KEY,
+    id              INTEGER    PRIMARY KEY AUTOINCREMENT,
     nume            TEXT    NOT NULL,
     descriere       TEXT,
     pret            REAL    NOT NULL,
@@ -75,33 +75,33 @@ CREATE TABLE produs (
 );
 
 CREATE TABLE mancare (
-    cod             TEXT    PRIMARY KEY,
+    id              INTEGER    PRIMARY KEY AUTOINCREMENT,
     gramaj          INTEGER NOT NULL,
     este_vegan      INTEGER NOT NULL DEFAULT 0,
     este_picant     INTEGER NOT NULL DEFAULT 0,
     nivel_picant    INTEGER NOT NULL DEFAULT 0,
     calorii         INTEGER NOT NULL,
-    FOREIGN KEY (cod) REFERENCES produs (cod) ON DELETE CASCADE
+    FOREIGN KEY (id) REFERENCES produs (id) ON DELETE CASCADE
 );
 
 CREATE TABLE desert (
-    cod              TEXT    PRIMARY KEY,
+    id               INTEGER    PRIMARY KEY AUTOINCREMENT,
     gramaj           INTEGER NOT NULL,
     contine_zahar    INTEGER NOT NULL DEFAULT 0,
     contine_gluten   INTEGER NOT NULL DEFAULT 0,
     contine_lactoza  INTEGER NOT NULL DEFAULT 0,
     este_rece        INTEGER NOT NULL DEFAULT 0,
-    FOREIGN KEY (cod) REFERENCES produs (cod) ON DELETE CASCADE
+    FOREIGN KEY (id) REFERENCES produs (id) ON DELETE CASCADE
 );
 
 CREATE TABLE bautura (
-    cod                  TEXT    PRIMARY KEY,
+    id                   INTEGER    PRIMARY KEY AUTOINCREMENT,
     volum_ml             INTEGER NOT NULL,
     este_carbogazoasa    INTEGER NOT NULL DEFAULT 0,
     contine_alcool       INTEGER NOT NULL DEFAULT 0,
     procent_alcool       REAL    NOT NULL DEFAULT 0,
     rece                 INTEGER NOT NULL DEFAULT 0,
-    FOREIGN KEY (cod) REFERENCES produs (cod) ON DELETE CASCADE
+    FOREIGN KEY (id) REFERENCES produs (id) ON DELETE CASCADE
 );
 
 CREATE TABLE card_bancar (
@@ -139,7 +139,7 @@ CREATE TABLE comanda (
 CREATE TABLE comanda_produs (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     comanda_id      INTEGER NOT NULL,
-    produs_cod      TEXT    NOT NULL,
+    produs_id       INTEGER    NOT NULL,
     FOREIGN KEY (comanda_id) REFERENCES comanda (id) ON DELETE CASCADE,
-    FOREIGN KEY (produs_cod) REFERENCES produs (cod)
+    FOREIGN KEY (produs_id) REFERENCES produs (id)
 );

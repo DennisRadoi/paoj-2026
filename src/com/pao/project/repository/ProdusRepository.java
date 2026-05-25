@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProdusRepository implements Repository<Produs, String> {
+public class ProdusRepository implements Repository<Produs, Integer> {
 
     private Connection getConnection() throws SQLException, IOException {
         return DatabaseConnection.getInstance().getConnection();
@@ -17,7 +17,7 @@ public class ProdusRepository implements Repository<Produs, String> {
 
     private Produs mapRow(ResultSet rs) throws SQLException {
         Produs p = new Produs();
-        p.setId(rs.getString("cod"));
+        p.setId(rs.getInt("id"));
         p.setNume(rs.getString("nume"));
         p.setDescriere(rs.getString("descriere"));
         p.setPret(rs.getDouble("pret"));
@@ -37,7 +37,7 @@ public class ProdusRepository implements Repository<Produs, String> {
             ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) {
-                    p.setId(keys.getString(1));
+                    p.setId(keys.getInt(1));
                 }
             }
         } catch (IOException e) {
@@ -46,10 +46,10 @@ public class ProdusRepository implements Repository<Produs, String> {
     }
 
     @Override
-    public Optional<Produs> findById(String cod) throws SQLException {
-        String sql = "SELECT cod, nume, descriere, pret, restaurant_id FROM comanda WHERE id = ?";
+    public Optional<Produs> findById(Integer id) throws SQLException {
+        String sql = "SELECT id, nume, descriere, pret, restaurant_id FROM produs WHERE id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
-            ps.setString(1, cod);
+            ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) return Optional.of(mapRow(rs));
                 return Optional.empty();
@@ -61,7 +61,7 @@ public class ProdusRepository implements Repository<Produs, String> {
 
     @Override
     public List<Produs> findAll() throws SQLException {
-        String sql = "SELECT cod, nume, descriere, pret, restaurant_id FROM comanda ORDER BY cod";
+        String sql = "SELECT id, nume, descriere, pret, restaurant_id FROM produs ORDER BY id";
         List<Produs> list = new ArrayList<>();
         try (PreparedStatement ps = getConnection().prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -74,13 +74,13 @@ public class ProdusRepository implements Repository<Produs, String> {
 
     @Override
     public void update(Produs p) throws SQLException {
-        String sql = "UPDATE comanda SET nume = ?, descriere = ?, pret = ?, restaurant_id = ? WHERE cod = ?";
+        String sql = "UPDATE produs SET nume = ?, descriere = ?, pret = ?, restaurant_id = ? WHERE id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setString(1, p.getNume());
             ps.setString(2, p.getDescriere());
             ps.setDouble(3, p.getPret());
             ps.setInt(4, p.getRestaurant());
-            ps.setString(5, p.getId());
+            ps.setInt(5, p.getId());
             ps.executeUpdate();
         } catch (IOException e) {
             throw new SQLException(e);
@@ -88,10 +88,10 @@ public class ProdusRepository implements Repository<Produs, String> {
     }
 
     @Override
-    public void delete(String id) throws SQLException {
-        String sql = "DELETE FROM comanda WHERE cod = ?";
+    public void delete(Integer id) throws SQLException {
+        String sql = "DELETE FROM produs WHERE id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ps.executeUpdate();
         } catch (IOException e) {
             throw new SQLException(e);
