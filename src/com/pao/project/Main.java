@@ -164,7 +164,10 @@ public class Main {
                 () -> System.out.println("NU A FOST GASIT")
         );
 
-        rr.update2(r1, "Pasta Trapezului", adr6.getId());
+        r1.setNume("Pasta Trapezului");
+        r1.setAdresa(adr6.getId());
+        rr.update(r1);
+
         System.out.println("Restaurantul cu id " + r1.getId() + " a fost actualizat");
 
         rr.findById(r1.getId()).ifPresentOrElse(
